@@ -1,41 +1,60 @@
 package vld
 
-import "errors"
-
 type stringVld struct {
 	*Validate
-	name  string
 	value string
+}
+
+func (v *Validate) String(value string) *stringVld {
+	return &stringVld{
+		Validate: v,
+		value:    value,
+	}
+}
+
+func (v *Validate) StrPtr(value *string) *stringVld {
+	if value == nil {
+		return &stringVld{
+			Validate: v,
+		}
+	}
+	return &stringVld{
+		Validate: v,
+		value:    *value,
+	}
 }
 
 func (c *stringVld) Required() *stringVld {
 	if c.value == "" {
-		c.err = errors.New("value is required")
+		c.errMessage += " value is required"
 	}
 	return c
 }
 
 func (c *stringVld) Max(max int) *stringVld {
-	if c.err == nil && len(c.value) > max {
-		c.err = errors.New("value greater than max")
+	if len(c.value) > max {
+		c.errMessage += " value greater than max"
 	}
 	return c
 }
 
 func (c *stringVld) Min(min int) *stringVld {
-	if c.err == nil && len(c.value) < min {
-		c.err = errors.New("value less than min")
+	if len(c.value) < min {
+		c.errMessage += " value less than min"
 	}
 	return c
 }
 
 func (c *stringVld) Length(min, max int) *stringVld {
-	if c.err == nil && (len(c.value) < min || len(c.value) > max) {
-		c.err = errors.New("value must be between min and max")
+	if len(c.value) < min || len(c.value) > max {
+		c.errMessage += " value must be between min and max"
 	}
 	return c
 }
 
-func (c *stringVld) Ok() bool {
-	return c.err == nil
+func (c *stringVld) Len(length int) *stringVld {
+	if len(c.value) != length {
+		c.errMessage += " value must be between specific length"
+	}
+	return c
 }

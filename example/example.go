@@ -25,12 +25,12 @@ func main() {
 	}
 
 	validate := vld.New()
-	_ = validate.String("id", p.ID).Required().Length(1, 20).Ok() &&
-		validate.StrPtr("old_id", p.OldID).Length(2, 20).Ok() &&
-		validate.String("descr", string(p.Descr)).Length(2, 20).Ok() &&
-		validate.NumI64("qty", p.Qty).Range(2, 20).Ok()
+	_ = validate.Init("id").String(p.ID).Required().Length(1, 20).Ok() &&
+		validate.Init("old_id").StrPtr(p.OldID).Length(2, 20).Ok() &&
+		validate.Init("descr").String(string(p.Descr)).Length(2, 20).Ok() &&
+		validate.Init("qty").NumI64(p.Qty).Range(2, 20).Ok()
 
 	if err := validate.Err(); err != nil {
-		fmt.Println("error: " + err.Error())
+		fmt.Println(err)
 	}
 }

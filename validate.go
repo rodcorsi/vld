@@ -1,51 +1,36 @@
 package vld
 
 type Validate struct {
-	err error
+	errs       Errors
+	fieldName  string
+	errMessage string
 }
 
 func New() *Validate {
 	return &Validate{}
 }
 
+func (v *Validate) HasError() bool {
+	return v.errs != nil
+}
+
 func (v *Validate) Err() error {
-	return v.err
+	return v.errs
 }
 
-func (v *Validate) String(name, value string) *stringVld {
-	return &stringVld{
-		Validate: v,
-		name:     name,
-		value:    value,
-	}
+func (v *Validate) Init(fieldName string) *Validate {
+	v.fieldName = fieldName
+	v.errMessage = ""
+	return v
 }
 
-func (v *Validate) StrPtr(name string, value *string) *stringVld {
-	if value == nil {
-		return &stringVld{
-			Validate: v,
-			name:     name,
-		}
+func (v *Validate) Ok() bool {
+	if v.errMessage != "" {
+		v.errs = append(v.errs, &ErrorTag{
+			fieldName: v.fieldName,
+			message:   v.errMessage,
+		})
+		return false
 	}
-	return &stringVld{
-		Validate: v,
-		name:     name,
-		value:    *value,
-	}
-}
-
-func (v *Validate) Number(name string, value float64) *numberVld {
-	return &numberVld{
-		Validate: v,
-		name:     name,
-		value:    value,
-	}
-}
-
-func (v *Validate) NumI64(name string, value int64) *numberVld {
-	return &numberVld{
-		Validate: v,
-		name:     name,
-		value:    float64(value),
-	}
+	return true
 }

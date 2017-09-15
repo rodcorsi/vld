@@ -1,41 +1,55 @@
 package vld
 
-import "errors"
-
 type numberVld struct {
 	*Validate
-	name  string
 	value float64
+}
+
+func (v *Validate) Number(value int) *numberVld {
+	return &numberVld{
+		Validate: v,
+		value:    float64(value),
+	}
+}
+
+func (v *Validate) NumF64(value float64) *numberVld {
+	return &numberVld{
+		Validate: v,
+		value:    value,
+	}
+}
+
+func (v *Validate) NumI64(value int64) *numberVld {
+	return &numberVld{
+		Validate: v,
+		value:    float64(value),
+	}
 }
 
 func (c *numberVld) Required() *numberVld {
 	if c.value == 0 {
-		c.err = errors.New("value is required")
+		c.errMessage += " value is required"
 	}
 	return c
 }
 
 func (c *numberVld) Max(max float64) *numberVld {
-	if c.err == nil && c.value > max {
-		c.err = errors.New("value greater than max")
+	if c.value > max {
+		c.errMessage += " value greater than max"
 	}
 	return c
 }
 
 func (c *numberVld) Min(min float64) *numberVld {
-	if c.err == nil && c.value < min {
-		c.err = errors.New("value less than min")
+	if c.value < min {
+		c.errMessage += " value less than min"
 	}
 	return c
 }
 
 func (c *numberVld) Range(min, max float64) *numberVld {
-	if c.err == nil && (c.value < min || c.value > max) {
-		c.err = errors.New("value must be between min and max")
+	if c.value < min || c.value > max {
+		c.errMessage += " value must be between min and max"
 	}
 	return c
-}
-
-func (c *numberVld) Ok() bool {
-	return c.err == nil
 }
