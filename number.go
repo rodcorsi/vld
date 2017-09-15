@@ -28,28 +28,28 @@ func (v *Validate) NumI64(value int64) *numberVld {
 
 func (c *numberVld) Required() *numberVld {
 	if c.value == 0 {
-		c.errMessage += " value is required"
+		c.AddErrMsg(" value is required")
 	}
 	return c
 }
 
 func (c *numberVld) Max(max float64) *numberVld {
 	if c.value > max {
-		c.errMessage += " value greater than max"
+		c.AddErrMsg(" value greater than max")
 	}
 	return c
 }
 
 func (c *numberVld) Min(min float64) *numberVld {
 	if c.value < min {
-		c.errMessage += " value less than min"
+		c.AddErrMsg(" value less than min")
 	}
 	return c
 }
 
 func (c *numberVld) Range(min, max float64) *numberVld {
 	if c.value < min || c.value > max {
-		c.errMessage += " value must be between min and max"
+		c.AddErrMsg(" value must be between min and max")
 	}
 	return c
 }

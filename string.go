@@ -26,35 +26,35 @@ func (v *Validate) StrPtr(value *string) *stringVld {
 
 func (c *stringVld) Required() *stringVld {
 	if c.value == "" {
-		c.errMessage += " value is required"
+		c.AddErrMsg(" value is required")
 	}
 	return c
 }
 
 func (c *stringVld) Max(max int) *stringVld {
 	if len(c.value) > max {
-		c.errMessage += " value greater than max"
+		c.AddErrMsg(" value greater than max")
 	}
 	return c
 }
 
 func (c *stringVld) Min(min int) *stringVld {
 	if len(c.value) < min {
-		c.errMessage += " value less than min"
+		c.AddErrMsg(" value less than min")
 	}
 	return c
 }
 
 func (c *stringVld) Length(min, max int) *stringVld {
 	if len(c.value) < min || len(c.value) > max {
-		c.errMessage += " value must be between min and max"
+		c.AddErrMsg(" value must be between min and max")
 	}
 	return c
 }
 
 func (c *stringVld) Len(length int) *stringVld {
 	if len(c.value) != length {
-		c.errMessage += " value must be between specific length"
+		c.AddErrMsg(" value must be between specific length")
 	}
 	return c
 }
