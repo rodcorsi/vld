@@ -1,45 +1,29 @@
 package vld
 
-type Validate struct {
-	errs      Errors
-	fieldName string
-	message   string
-}
+import "bytes"
 
-func New() *Validate {
-	return &Validate{}
-}
+type Validate []FieldError
 
-func NewInit(fieldName string) *Validate {
-	return &Validate{
-		fieldName: fieldName,
-	}
-}
-
-func (v *Validate) Init(fieldName string) *Validate {
-	v.fieldName = fieldName
-	v.message = ""
-	return v
-}
-
-func (v *Validate) Err() error {
-	if v.errs != nil {
-		return v.errs
-	}
-	return nil
-}
-
-func (v *Validate) AddErrMsg(message string) {
-	v.message += message
-}
-
-func (v *Validate) Ok() bool {
-	if v.message != "" {
-		v.errs = append(v.errs, &ErrorTag{
-			fieldName: v.fieldName,
-			message:   v.message,
+func (e Validate) Ok(fieldName string, err error) bool {
+	if err != nil {
+		e = append(e, &fieldError{
+			fieldName: fieldName,
+			err:       err,
 		})
 		return false
 	}
 	return true
+}
+
+func (e Validate) HasError() bool {
+	return len(e) > 0
+}
+
+func (e Validate) Error() string {
+	var buffer bytes.Buffer
+	for _, err := range e {
+		buffer.WriteString(err.Error())
+		buffer.WriteString("\n")
+	}
+	return buffer.String()
 }

@@ -1,34 +1,31 @@
 package vld
 
 import (
-	"bytes"
 	"fmt"
 )
 
-type ErrorTag struct {
+// compile check
+var _ FieldError = &fieldError{}
+
+type FieldError interface {
+	Field() string
+	Message() string
+	Error() string
+}
+
+type fieldError struct {
 	fieldName string
-	message   string
+	err       error
 }
 
-func NewErrorTag(fieldName, message string) *ErrorTag {
-	return &ErrorTag{
-		fieldName: fieldName,
-		message:   message,
-	}
+func (e *fieldError) Error() string {
+	return fmt.Sprintf("validation for '%v' failed%v", e.fieldName, e.Error())
 }
 
-func (e *ErrorTag) Error() string {
-	return fmt.Sprintf("validation for '%v' failed%v", e.fieldName, e.message)
+func (e *fieldError) Field() string {
+	return e.fieldName
 }
 
-type Errors []*ErrorTag
-
-func (e Errors) Error() string {
-	var buffer bytes.Buffer
-	buffer.WriteString(e[0].Error())
-	for i := 1; i < len(e); i++ {
-		buffer.WriteString("\n")
-		buffer.WriteString(e[i].Error())
-	}
-	return buffer.String()
+func (e *fieldError) Message() string {
+	return e.err.Error()
 }
