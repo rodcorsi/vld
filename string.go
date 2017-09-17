@@ -1,5 +1,7 @@
 package vld
 
+import "fmt"
+
 type stringVld struct {
 	*Validate
 	value string
@@ -21,28 +23,28 @@ func (c *stringVld) Required() *stringVld {
 
 func (c *stringVld) Max(max int) *stringVld {
 	if len(c.value) > max {
-		c.AddErrMsg(" greater than max(%v)", max)
+		c.AddErrMsg(fmt.Sprintf(" greater than max(%v)", max))
 	}
 	return c
 }
 
 func (c *stringVld) Min(min int) *stringVld {
 	if len(c.value) < min {
-		c.AddErrMsg(" smaller than min(%v)", min)
+		c.AddErrMsg(fmt.Sprintf(" smaller than min(%v)", min))
 	}
 	return c
 }
 
 func (c *stringVld) Length(min, max int) *stringVld {
 	if len(c.value) < min || len(c.value) > max {
-		c.AddErrMsg(" out of length(min:v%, max:v%)", min, max)
+		c.AddErrMsg(fmt.Sprintf(" out of length(min:%v max:%v)", min, max))
 	}
 	return c
 }
 
 func (c *stringVld) Len(length int) *stringVld {
 	if len(c.value) != length {
-		c.AddErrMsg(" out of len(%v)", length)
+		c.AddErrMsg(fmt.Sprintf(" out of len(%v)", length))
 	}
 	return c
 }

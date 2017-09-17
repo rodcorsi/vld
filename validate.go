@@ -1,7 +1,5 @@
 package vld
 
-import "fmt"
-
 type Validate struct {
 	errs      Errors
 	fieldName string
@@ -31,8 +29,8 @@ func (v *Validate) Err() error {
 	return nil
 }
 
-func (v *Validate) AddErrMsg(message string, a ...interface{}) {
-	v.message += fmt.Sprintf(message, a...)
+func (v *Validate) AddErrMsg(message string) {
+	v.message += message
 }
 
 func (v *Validate) Ok() bool {
