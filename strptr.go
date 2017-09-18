@@ -6,7 +6,7 @@ import (
 )
 
 type strptrVld struct {
-	Error error
+	err   error
 	value *string
 }
 
@@ -16,37 +16,41 @@ func StrPtr(value *string) *strptrVld {
 	}
 }
 
-func (c *strptrVld) Required() *strptrVld {
-	if c.value == nil {
-		c.Error = errors.New("required")
+func (s *strptrVld) Required() *strptrVld {
+	if s.value == nil {
+		s.err = errors.New("required")
 	}
-	return c
+	return s
 }
 
-func (c *strptrVld) Max(max int) *strptrVld {
-	if c.value == nil || len(*c.value) > max {
-		c.Error = fmt.Errorf("greater than max(%v)", max)
+func (s *strptrVld) Max(max int) *strptrVld {
+	if s.value == nil || len(*s.value) > max {
+		s.err = fmt.Errorf("greater than max(%v)", max)
 	}
-	return c
+	return s
 }
 
-func (c *strptrVld) Min(min int) *strptrVld {
-	if c.value == nil || len(*c.value) < min {
-		c.Error = fmt.Errorf("smaller than min(%v)", min)
+func (s *strptrVld) Min(min int) *strptrVld {
+	if s.value == nil || len(*s.value) < min {
+		s.err = fmt.Errorf("smaller than min(%v)", min)
 	}
-	return c
+	return s
 }
 
-func (c *strptrVld) Length(min, max int) *strptrVld {
-	if c.value == nil || (len(*c.value) < min || len(*c.value) > max) {
-		c.Error = fmt.Errorf("out of length(min:%v max:%v)", min, max)
+func (s *strptrVld) Length(min, max int) *strptrVld {
+	if s.value == nil || (len(*s.value) < min || len(*s.value) > max) {
+		s.err = fmt.Errorf("out of length(min:%v max:%v)", min, max)
 	}
-	return c
+	return s
 }
 
-func (c *strptrVld) Len(length int) *strptrVld {
-	if c.value == nil || (len(*c.value) != length) {
-		c.Error = fmt.Errorf("out of len(%v)", length)
+func (s *strptrVld) Len(length int) *strptrVld {
+	if s.value == nil || (len(*s.value) != length) {
+		s.err = fmt.Errorf("out of len(%v)", length)
 	}
-	return c
+	return s
+}
+
+func (s *strptrVld) Error() error {
+	return s.err
 }

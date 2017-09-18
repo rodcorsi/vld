@@ -5,32 +5,32 @@ import (
 )
 
 func Test_String_Required(t *testing.T) {
-	validate := New()
-	ok := validate.Init("").String("").Ok()
+	var validate Validate
+	ok := validate.Ok("", String("").Error())
 	if !ok {
 		t.Errorf("String.Required() = %v, want %v", ok, true)
 	}
-	ok = validate.Init("").String("").Required().Ok()
+	ok = validate.Ok("", String("").Required().Error())
 	if ok {
 		t.Errorf("String.Required() = %v, want %v", ok, false)
 	}
-	ok = validate.Init("").String("x").Required().Ok()
+	ok = validate.Ok("", String("x").Required().Error())
 	if !ok {
 		t.Errorf("String.Required() = %v, want %v", ok, true)
 	}
 }
 
 func Test_String_Max(t *testing.T) {
-	validate := New()
-	ok := validate.Init("").String("").Max(0).Ok()
+	var validate Validate
+	ok := validate.Ok("", String("").Max(0).Error())
 	if !ok {
 		t.Errorf("String.Max() = %v, want %v", ok, true)
 	}
-	ok = validate.Init("").String("x").Max(0).Ok()
+	ok = validate.Ok("", String("x").Max(0).Error())
 	if ok {
 		t.Errorf("String.Max() = %v, want %v", ok, false)
 	}
-	ok = validate.Init("").String("x").Max(1).Ok()
+	ok = validate.Ok("", String("x").Max(1).Error())
 	if !ok {
 		t.Errorf("String.Max() = %v, want %v", ok, true)
 	}

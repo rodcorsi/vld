@@ -3,17 +3,17 @@ package vld
 import "testing"
 
 func Test_StrPtr_Required(t *testing.T) {
-	validate := New()
-	ok := validate.Init("").StrPtr(nil).Ok()
+	var validate Validate
+	ok := validate.Ok("", StrPtr(nil).Error())
 	if !ok {
 		t.Errorf("StrPtr.Required() = %v, want %v", ok, true)
 	}
-	ok = validate.Init("").StrPtr(nil).Required().Ok()
+	ok = validate.Ok("", StrPtr(nil).Required().Error())
 	if ok {
 		t.Errorf("StrPtr.Required() = %v, want %v", ok, false)
 	}
 	value := ""
-	ok = validate.Init("").StrPtr(&value).Required().Ok()
+	ok = validate.Ok("", StrPtr(&value).Required().Error())
 	if !ok {
 		t.Errorf("StrPtr.Required() = %v, want %v", ok, true)
 	}
