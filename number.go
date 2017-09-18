@@ -1,7 +1,5 @@
 package vld
 
-import "errors"
-
 type numberVld struct {
 	err   error
 	value float64
@@ -30,7 +28,7 @@ func (n *numberVld) Required() *numberVld {
 		return n
 	}
 	if n.value == 0 {
-		n.err = errors.New("required")
+		n.err = ErrRequired.Gen()
 	}
 	return n
 }
@@ -40,7 +38,7 @@ func (n *numberVld) Max(max float64) *numberVld {
 		return n
 	}
 	if n.value > max {
-		n.err = errors.New("value greater than max")
+		n.err = ErrGreaterThanMax.Gen(max)
 	}
 	return n
 }
@@ -50,7 +48,7 @@ func (n *numberVld) Min(min float64) *numberVld {
 		return n
 	}
 	if n.value < min {
-		n.err = errors.New("value less than min")
+		n.err = ErrSmallerThanMin.Gen(min)
 	}
 	return n
 }
@@ -60,7 +58,7 @@ func (n *numberVld) Range(min, max float64) *numberVld {
 		return n
 	}
 	if n.value < min || n.value > max {
-		n.err = errors.New("value must be between min and max")
+		n.err = ErrRange.Gen(min, max)
 	}
 	return n
 }

@@ -1,10 +1,5 @@
 package vld
 
-import (
-	"errors"
-	"fmt"
-)
-
 type stringVld struct {
 	err   error
 	value string
@@ -21,7 +16,7 @@ func (s *stringVld) Required() *stringVld {
 		return s
 	}
 	if s.value == "" {
-		s.err = errors.New("required")
+		s.err = ErrRequired.Gen()
 	}
 	return s
 }
@@ -31,7 +26,7 @@ func (s *stringVld) Max(max int) *stringVld {
 		return s
 	}
 	if len(s.value) > max {
-		s.err = fmt.Errorf("greater than max(%v)", max)
+		s.err = ErrGreaterThanMax.Gen(max)
 	}
 	return s
 }
@@ -41,7 +36,7 @@ func (s *stringVld) Min(min int) *stringVld {
 		return s
 	}
 	if len(s.value) < min {
-		s.err = fmt.Errorf("smaller than min(%v)", min)
+		s.err = ErrSmallerThanMin.Gen(min)
 	}
 	return s
 }
@@ -51,7 +46,7 @@ func (s *stringVld) Length(min, max int) *stringVld {
 		return s
 	}
 	if len(s.value) < min || len(s.value) > max {
-		s.err = fmt.Errorf("out of length(min:%v max:%v)", min, max)
+		s.err = ErrLength.Gen(min, max)
 	}
 	return s
 }
@@ -61,7 +56,7 @@ func (s *stringVld) Len(length int) *stringVld {
 		return s
 	}
 	if len(s.value) != length {
-		s.err = fmt.Errorf("out of len(%v)", length)
+		s.err = ErrLen.Gen(length)
 	}
 	return s
 }
