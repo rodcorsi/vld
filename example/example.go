@@ -21,16 +21,17 @@ func main() {
 		ID:    "12",
 		OldID: &oldID,
 		Descr: "ff",
-		Qty:   10,
+		Qty:   0,
 	}
 
 	validate := vld.New()
-	_ = validate.Init("id").String(p.ID).Required().Length(1, 20).Ok() &&
-		validate.Init("old_id").StrPtr(p.OldID).Length(2, 20).Ok() &&
-		validate.Init("descr").String(string(p.Descr)).Length(2, 20).Ok() &&
-		validate.Init("qty").NumI64(p.Qty).Range(2, 20).Ok()
 
-	if err := validate.Err(); err != nil {
-		fmt.Println(err)
+	_ = validate.Ok("id", vld.String(p.ID).Required().Length(1, 20).Error()) &&
+		validate.Ok("old_id", vld.StrPtr(p.OldID).Length(2, 20).Error()) &&
+		validate.Ok("descr", vld.String(string(p.Descr)).Length(2, 20).Error()) &&
+		validate.Ok("qty", vld.NumI64(p.Qty).Range(2, 20).Error())
+
+	if validate.HasError() {
+		fmt.Println(validate.Error())
 	}
 }

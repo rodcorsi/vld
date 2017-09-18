@@ -2,11 +2,17 @@ package vld
 
 import "bytes"
 
-type Validate []FieldError
+type Validate struct {
+	errs []FieldError
+}
 
-func (e Validate) Ok(fieldName string, err error) bool {
+func New() *Validate {
+	return &Validate{}
+}
+
+func (e *Validate) Ok(fieldName string, err error) bool {
 	if err != nil {
-		e = append(e, &fieldError{
+		e.errs = append(e.errs, &fieldError{
 			fieldName: fieldName,
 			err:       err,
 		})
@@ -15,13 +21,13 @@ func (e Validate) Ok(fieldName string, err error) bool {
 	return true
 }
 
-func (e Validate) HasError() bool {
-	return len(e) > 0
+func (e *Validate) HasError() bool {
+	return len(e.errs) > 0
 }
 
-func (e Validate) Error() string {
+func (e *Validate) Error() string {
 	var buffer bytes.Buffer
-	for _, err := range e {
+	for _, err := range e.errs {
 		buffer.WriteString(err.Error())
 		buffer.WriteString("\n")
 	}

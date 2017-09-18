@@ -19,7 +19,7 @@ type fieldError struct {
 }
 
 func (e *fieldError) Error() string {
-	return fmt.Sprintf("validation for '%v' failed%v", e.fieldName, e.Error())
+	return fmt.Sprintf("validation for '%v' failed: %v", e.fieldName, e.err.Error())
 }
 
 func (e *fieldError) Field() string {
