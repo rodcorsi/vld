@@ -17,6 +17,9 @@ func StrPtr(value *string) *strptrVld {
 }
 
 func (s *strptrVld) Required() *strptrVld {
+	if s.err != nil {
+		return s
+	}
 	if s.value == nil {
 		s.err = errors.New("required")
 	}
@@ -24,6 +27,9 @@ func (s *strptrVld) Required() *strptrVld {
 }
 
 func (s *strptrVld) Max(max int) *strptrVld {
+	if s.err != nil {
+		return s
+	}
 	if s.value == nil || len(*s.value) > max {
 		s.err = fmt.Errorf("greater than max(%v)", max)
 	}
@@ -31,6 +37,9 @@ func (s *strptrVld) Max(max int) *strptrVld {
 }
 
 func (s *strptrVld) Min(min int) *strptrVld {
+	if s.err != nil {
+		return s
+	}
 	if s.value == nil || len(*s.value) < min {
 		s.err = fmt.Errorf("smaller than min(%v)", min)
 	}
@@ -38,6 +47,9 @@ func (s *strptrVld) Min(min int) *strptrVld {
 }
 
 func (s *strptrVld) Length(min, max int) *strptrVld {
+	if s.err != nil {
+		return s
+	}
 	if s.value == nil || (len(*s.value) < min || len(*s.value) > max) {
 		s.err = fmt.Errorf("out of length(min:%v max:%v)", min, max)
 	}
@@ -45,6 +57,9 @@ func (s *strptrVld) Length(min, max int) *strptrVld {
 }
 
 func (s *strptrVld) Len(length int) *strptrVld {
+	if s.err != nil {
+		return s
+	}
 	if s.value == nil || (len(*s.value) != length) {
 		s.err = fmt.Errorf("out of len(%v)", length)
 	}

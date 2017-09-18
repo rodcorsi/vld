@@ -26,6 +26,9 @@ func NumI64(value int64) *numberVld {
 }
 
 func (n *numberVld) Required() *numberVld {
+	if n.err != nil {
+		return n
+	}
 	if n.value == 0 {
 		n.err = errors.New("required")
 	}
@@ -33,6 +36,9 @@ func (n *numberVld) Required() *numberVld {
 }
 
 func (n *numberVld) Max(max float64) *numberVld {
+	if n.err != nil {
+		return n
+	}
 	if n.value > max {
 		n.err = errors.New("value greater than max")
 	}
@@ -40,6 +46,9 @@ func (n *numberVld) Max(max float64) *numberVld {
 }
 
 func (n *numberVld) Min(min float64) *numberVld {
+	if n.err != nil {
+		return n
+	}
 	if n.value < min {
 		n.err = errors.New("value less than min")
 	}
@@ -47,6 +56,9 @@ func (n *numberVld) Min(min float64) *numberVld {
 }
 
 func (n *numberVld) Range(min, max float64) *numberVld {
+	if n.err != nil {
+		return n
+	}
 	if n.value < min || n.value > max {
 		n.err = errors.New("value must be between min and max")
 	}

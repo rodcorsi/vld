@@ -16,41 +16,56 @@ func String(value string) *stringVld {
 	}
 }
 
-func (c *stringVld) Required() *stringVld {
-	if c.value == "" {
-		c.err = errors.New("required")
+func (s *stringVld) Required() *stringVld {
+	if s.err != nil {
+		return s
 	}
-	return c
+	if s.value == "" {
+		s.err = errors.New("required")
+	}
+	return s
 }
 
-func (c *stringVld) Max(max int) *stringVld {
-	if len(c.value) > max {
-		c.err = fmt.Errorf("greater than max(%v)", max)
+func (s *stringVld) Max(max int) *stringVld {
+	if s.err != nil {
+		return s
 	}
-	return c
+	if len(s.value) > max {
+		s.err = fmt.Errorf("greater than max(%v)", max)
+	}
+	return s
 }
 
-func (c *stringVld) Min(min int) *stringVld {
-	if len(c.value) < min {
-		c.err = fmt.Errorf("smaller than min(%v)", min)
+func (s *stringVld) Min(min int) *stringVld {
+	if s.err != nil {
+		return s
 	}
-	return c
+	if len(s.value) < min {
+		s.err = fmt.Errorf("smaller than min(%v)", min)
+	}
+	return s
 }
 
-func (c *stringVld) Length(min, max int) *stringVld {
-	if len(c.value) < min || len(c.value) > max {
-		c.err = fmt.Errorf("out of length(min:%v max:%v)", min, max)
+func (s *stringVld) Length(min, max int) *stringVld {
+	if s.err != nil {
+		return s
 	}
-	return c
+	if len(s.value) < min || len(s.value) > max {
+		s.err = fmt.Errorf("out of length(min:%v max:%v)", min, max)
+	}
+	return s
 }
 
-func (c *stringVld) Len(length int) *stringVld {
-	if len(c.value) != length {
-		c.err = fmt.Errorf("out of len(%v)", length)
+func (s *stringVld) Len(length int) *stringVld {
+	if s.err != nil {
+		return s
 	}
-	return c
+	if len(s.value) != length {
+		s.err = fmt.Errorf("out of len(%v)", length)
+	}
+	return s
 }
 
-func (c *stringVld) Error() error {
-	return c.err
+func (s *stringVld) Error() error {
+	return s.err
 }
