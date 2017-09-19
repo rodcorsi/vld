@@ -36,17 +36,15 @@ func NumI64(value int64) *numberVld {
 }
 
 func (n *numberVld) Required() *numberVld {
-	if n.err != nil {
+	if n.err != nil || n.value != 0 {
 		return n
 	}
-	if n.value == 0 {
-		n.err = ErrRequired.Gen()
-	}
+	n.err = ErrRequired.Gen()
 	return n
 }
 
 func (n *numberVld) GT(value float64) *numberVld {
-	if n.err != nil || n.value > value {
+	if n.err != nil || n.value == 0 || n.value > value {
 		return n
 	}
 	n.err = ErrNumberGT.Gen(value)
@@ -54,7 +52,7 @@ func (n *numberVld) GT(value float64) *numberVld {
 }
 
 func (n *numberVld) GTE(value float64) *numberVld {
-	if n.err != nil || n.value >= value {
+	if n.err != nil || n.value == 0 || n.value >= value {
 		return n
 	}
 	n.err = ErrNumberGTE.Gen(value)
@@ -62,7 +60,7 @@ func (n *numberVld) GTE(value float64) *numberVld {
 }
 
 func (n *numberVld) LT(value float64) *numberVld {
-	if n.err != nil || n.value < value {
+	if n.err != nil || n.value == 0 || n.value < value {
 		return n
 	}
 	n.err = ErrNumberLT.Gen(value)
@@ -70,7 +68,7 @@ func (n *numberVld) LT(value float64) *numberVld {
 }
 
 func (n *numberVld) LTE(value float64) *numberVld {
-	if n.err != nil || n.value <= value {
+	if n.err != nil || n.value == 0 || n.value <= value {
 		return n
 	}
 	n.err = ErrNumberLTE.Gen(value)
@@ -78,12 +76,10 @@ func (n *numberVld) LTE(value float64) *numberVld {
 }
 
 func (n *numberVld) Range(min, max float64) *numberVld {
-	if n.err != nil {
+	if n.err != nil || n.value == 0 || (n.value >= min && n.value <= max) {
 		return n
 	}
-	if n.value < min || n.value > max {
-		n.err = ErrNumberRange.Gen(min, max)
-	}
+	n.err = ErrNumberRange.Gen(min, max)
 	return n
 }
 
