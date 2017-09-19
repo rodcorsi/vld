@@ -45,23 +45,35 @@ func (n *numberVld) Required() *numberVld {
 	return n
 }
 
-func (n *numberVld) Max(max float64) *numberVld {
-	if n.err != nil {
+func (n *numberVld) GT(value float64) *numberVld {
+	if n.err != nil || n.value > value {
 		return n
 	}
-	if n.value > max {
-		n.err = ErrGreaterThanMax.Gen(max)
-	}
+	n.err = ErrNumberGT.Gen(value)
 	return n
 }
 
-func (n *numberVld) Min(min float64) *numberVld {
-	if n.err != nil {
+func (n *numberVld) GTE(value float64) *numberVld {
+	if n.err != nil || n.value >= value {
 		return n
 	}
-	if n.value < min {
-		n.err = ErrSmallerThanMin.Gen(min)
+	n.err = ErrNumberGTE.Gen(value)
+	return n
+}
+
+func (n *numberVld) LT(value float64) *numberVld {
+	if n.err != nil || n.value < value {
+		return n
 	}
+	n.err = ErrNumberLT.Gen(value)
+	return n
+}
+
+func (n *numberVld) LTE(value float64) *numberVld {
+	if n.err != nil || n.value <= value {
+		return n
+	}
+	n.err = ErrNumberLTE.Gen(value)
 	return n
 }
 

@@ -21,23 +21,35 @@ func (s *strptrVld) Required() *strptrVld {
 	return s
 }
 
-func (s *strptrVld) Max(max int) *strptrVld {
-	if s.err != nil {
+func (s *strptrVld) GT(length int) *strptrVld {
+	if s.err != nil || len(*s.value) > length {
 		return s
 	}
-	if s.value == nil || len(*s.value) > max {
-		s.err = ErrGreaterThanMax.Gen(max)
-	}
+	s.err = ErrStringGT.Gen(length)
 	return s
 }
 
-func (s *strptrVld) Min(min int) *strptrVld {
-	if s.err != nil {
+func (s *strptrVld) GTE(length int) *strptrVld {
+	if s.err != nil || len(*s.value) >= length {
 		return s
 	}
-	if s.value == nil || len(*s.value) < min {
-		s.err = ErrSmallerThanMin.Gen(min)
+	s.err = ErrStringGTE.Gen(length)
+	return s
+}
+
+func (s *strptrVld) LT(length int) *strptrVld {
+	if s.err != nil || len(*s.value) < length {
+		return s
 	}
+	s.err = ErrStringLT.Gen(length)
+	return s
+}
+
+func (s *strptrVld) LTE(length int) *strptrVld {
+	if s.err != nil || len(*s.value) <= length {
+		return s
+	}
+	s.err = ErrStringLTE.Gen(length)
 	return s
 }
 

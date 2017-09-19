@@ -19,19 +19,3 @@ func Test_String_Required(t *testing.T) {
 		t.Errorf("String.Required() = %v, want %v", ok, true)
 	}
 }
-
-func Test_String_Max(t *testing.T) {
-	var validate Validate
-	ok := validate.Ok("", String("").Max(0).Error())
-	if !ok {
-		t.Errorf("String.Max() = %v, want %v", ok, true)
-	}
-	ok = validate.Ok("", String("x").Max(0).Error())
-	if ok {
-		t.Errorf("String.Max() = %v, want %v", ok, false)
-	}
-	ok = validate.Ok("", String("x").Max(1).Error())
-	if !ok {
-		t.Errorf("String.Max() = %v, want %v", ok, true)
-	}
-}
