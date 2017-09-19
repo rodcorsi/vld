@@ -57,6 +57,7 @@ func Test_String_GTE(t *testing.T) {
 		{"3", String("").Required(), 10, true}, // required
 		{"4", String("a"), 1, false},           // equal 1
 		{"5", String("ab"), 1, false},
+		{"6", String("ab"), 10, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

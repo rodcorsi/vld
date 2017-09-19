@@ -61,6 +61,7 @@ func Test_StrPtr_GTE(t *testing.T) {
 		{"3", StrPtr(nil).Required(), 10, true}, // required
 		{"4", StrPtr(ptrStr("a")), 1, false},    // equal 1
 		{"5", StrPtr(ptrStr("ab")), 1, false},
+		{"6", StrPtr(ptrStr("ab")), 10, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
