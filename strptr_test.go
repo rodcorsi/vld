@@ -12,7 +12,7 @@ func ptrStr(val string) *string {
 func Test_StrPtr_Required(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		wantErr bool
 	}{
 		{"1", StrPtr(nil), true},
@@ -30,7 +30,7 @@ func Test_StrPtr_Required(t *testing.T) {
 func Test_StrPtr_GT(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		length  int
 		wantErr bool
 	}{
@@ -52,7 +52,7 @@ func Test_StrPtr_GT(t *testing.T) {
 func Test_StrPtr_GTE(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		length  int
 		wantErr bool
 	}{
@@ -75,7 +75,7 @@ func Test_StrPtr_GTE(t *testing.T) {
 func Test_StrPtr_LT(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		length  int
 		wantErr bool
 	}{
@@ -98,7 +98,7 @@ func Test_StrPtr_LT(t *testing.T) {
 func Test_StrPtr_LTE(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		length  int
 		wantErr bool
 	}{
@@ -121,7 +121,7 @@ func Test_StrPtr_LTE(t *testing.T) {
 func Test_StrPtr_Length(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		min     int
 		max     int
 		wantErr bool
@@ -147,7 +147,7 @@ func Test_StrPtr_Length(t *testing.T) {
 func Test_StrPtr_Len(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		length  int
 		wantErr bool
 	}{
@@ -169,7 +169,7 @@ func Test_StrPtr_Len(t *testing.T) {
 func Test_StrPtr_Match(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		pattern string
 		wantErr bool
 	}{
@@ -190,7 +190,7 @@ func Test_StrPtr_Match(t *testing.T) {
 func Test_StrPtr_OneOf(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		values  []string
 		wantErr bool
 	}{
@@ -212,7 +212,7 @@ func Test_StrPtr_OneOf(t *testing.T) {
 func Test_StrPtr_IsEmail(t *testing.T) {
 	tests := []struct {
 		name    string
-		s       *strptrVld
+		s       *stringVld
 		wantErr bool
 	}{
 		{"1", StrPtr(nil), false},                   // not required
