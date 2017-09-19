@@ -115,6 +115,19 @@ func (s *strptrVld) OneOf(values []string) *strptrVld {
 	return s
 }
 
+func (s *strptrVld) IsEmail() *strptrVld {
+	if s.err != nil {
+		return s
+	}
+	if s.value != nil {
+		if emailRegex.MatchString(*s.value) {
+			return s
+		}
+	}
+	s.err = ErrStringIsEmail.Gen()
+	return s
+}
+
 func (s *strptrVld) Error() error {
 	return s.err
 }

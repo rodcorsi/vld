@@ -31,6 +31,9 @@ var (
 
 	// ErrStringIn value is not one of
 	ErrStringOneOf ErrorGen = NewErrorGen("value is not one of %v")
+
+	// ErrStringIsEmail value is not a valid email
+	ErrStringIsEmail ErrorGen = NewErrorGen("value is not a valid email")
 )
 
 // used in Number
