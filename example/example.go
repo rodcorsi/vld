@@ -9,19 +9,21 @@ import (
 type myStr string
 
 type Product struct {
-	ID    string
-	OldID *string
-	Descr myStr
-	Qty   int64
+	ID     string
+	OldID  *string
+	Descr  myStr
+	Qty    int64
+	Values []string
 }
 
 func main() {
+
 	oldID := "123"
 	p := Product{
 		ID:    "12",
 		OldID: &oldID,
 		Descr: "ff",
-		Qty:   0,
+		Qty:   10,
 	}
 
 	validate := vld.New()
@@ -31,7 +33,5 @@ func main() {
 		validate.Ok("descr", vld.String(string(p.Descr)).Length(2, 20).Error()) &&
 		validate.Ok("qty", vld.NumI64(p.Qty).Range(2, 20).Error())
 
-	if validate.HasError() {
-		fmt.Println(validate.Error())
-	}
+	fmt.Println(validate.Error())
 }

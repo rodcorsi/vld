@@ -15,17 +15,21 @@ func TestValidate_Ok(t *testing.T) {
 	}
 }
 
-func TestValidate_HasError(t *testing.T) {
+func TestValidate_Error(t *testing.T) {
 	validate := New()
-	if validate.HasError() {
-		t.Error("HasError() expected false")
+	if err := validate.Error(); err != nil {
+		t.Error("Error() expected nil", err)
+	}
+	validate.Ok("", nil)
+	if err := validate.Error(); err != nil {
+		t.Error("Error() expected nil", err)
 	}
 	validate.Ok("", errors.New(""))
-	if !validate.HasError() {
-		t.Error("HasError() expected true")
+	if err := validate.Error(); err == nil {
+		t.Error("Error() expected not nil")
 	}
 	validate.Ok("", errors.New(""))
-	if !validate.HasError() {
-		t.Error("HasError() expected true 2 errors")
+	if err := validate.Error(); err == nil {
+		t.Error("Error() expected not nil 2 errors")
 	}
 }
