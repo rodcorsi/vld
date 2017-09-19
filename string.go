@@ -33,7 +33,9 @@ func (s *stringVld) GT(length int) *stringVld {
 	if s.err != nil || len(s.value) > length {
 		return s
 	}
-	s.err = ErrStringGT.Gen(length)
+	if s.value != "" {
+		s.err = ErrStringGT.Gen(length)
+	}
 	return s
 }
 
@@ -41,7 +43,9 @@ func (s *stringVld) GTE(length int) *stringVld {
 	if s.err != nil || len(s.value) >= length {
 		return s
 	}
-	s.err = ErrStringGTE.Gen(length)
+	if s.value != "" {
+		s.err = ErrStringGTE.Gen(length)
+	}
 	return s
 }
 
@@ -49,7 +53,9 @@ func (s *stringVld) LT(length int) *stringVld {
 	if s.err != nil || len(s.value) < length {
 		return s
 	}
-	s.err = ErrStringLT.Gen(length)
+	if s.value != "" {
+		s.err = ErrStringLT.Gen(length)
+	}
 	return s
 }
 
@@ -58,6 +64,7 @@ func (s *stringVld) LTE(length int) *stringVld {
 		return s
 	}
 	s.err = ErrStringLTE.Gen(length)
+
 	return s
 }
 
@@ -65,7 +72,7 @@ func (s *stringVld) Length(min, max int) *stringVld {
 	if s.err != nil {
 		return s
 	}
-	if len(s.value) < min || len(s.value) > max {
+	if s.value != "" && (len(s.value) < min || len(s.value) > max) {
 		s.err = ErrStringLength.Gen(min, max)
 	}
 	return s
@@ -75,7 +82,7 @@ func (s *stringVld) Len(length int) *stringVld {
 	if s.err != nil {
 		return s
 	}
-	if len(s.value) != length {
+	if s.value != "" && len(s.value) != length {
 		s.err = ErrStringLen.Gen(length)
 	}
 	return s
@@ -85,7 +92,7 @@ func (s *stringVld) Match(rg *regexp.Regexp) *stringVld {
 	if s.err != nil {
 		return s
 	}
-	if !rg.MatchString(s.value) {
+	if s.value != "" && !rg.MatchString(s.value) {
 		s.err = ErrStringMatch.Gen()
 	}
 	return s
@@ -95,12 +102,14 @@ func (s *stringVld) OneOf(values []string) *stringVld {
 	if s.err != nil {
 		return s
 	}
-	for _, v := range values {
-		if v == s.value {
-			return s
+	if s.value != "" {
+		for _, v := range values {
+			if v == s.value {
+				return s
+			}
 		}
+		s.err = ErrStringOneOf.Gen(values)
 	}
-	s.err = ErrStringOneOf.Gen(values)
 	return s
 }
 
@@ -108,7 +117,7 @@ func (s *stringVld) IsEmail() *stringVld {
 	if s.err != nil {
 		return s
 	}
-	if !emailRegex.MatchString(s.value) {
+	if s.value != "" && !emailRegex.MatchString(s.value) {
 		s.err = ErrStringIsEmail.Gen()
 	}
 	return s
