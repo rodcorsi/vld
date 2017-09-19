@@ -11,9 +11,21 @@ func Number(value int) *numberVld {
 	}
 }
 
+func NumF32(value float32) *numberVld {
+	return &numberVld{
+		value: float64(value),
+	}
+}
+
 func NumF64(value float64) *numberVld {
 	return &numberVld{
 		value: value,
+	}
+}
+
+func NumI32(value int32) *numberVld {
+	return &numberVld{
+		value: float64(value),
 	}
 }
 
