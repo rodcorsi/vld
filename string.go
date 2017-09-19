@@ -58,7 +58,7 @@ func (s *stringVld) Length(min, max int) *stringVld {
 		return s
 	}
 	if len(s.value) < min || len(s.value) > max {
-		s.err = ErrLength.Gen(min, max)
+		s.err = ErrStringLength.Gen(min, max)
 	}
 	return s
 }
@@ -68,7 +68,7 @@ func (s *stringVld) Len(length int) *stringVld {
 		return s
 	}
 	if len(s.value) != length {
-		s.err = ErrLen.Gen(length)
+		s.err = ErrStringLen.Gen(length)
 	}
 	return s
 }

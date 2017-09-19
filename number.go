@@ -82,7 +82,7 @@ func (n *numberVld) Range(min, max float64) *numberVld {
 		return n
 	}
 	if n.value < min || n.value > max {
-		n.err = ErrRange.Gen(min, max)
+		n.err = ErrNumberRange.Gen(min, max)
 	}
 	return n
 }
