@@ -28,6 +28,9 @@ var (
 
 	// ErrStringMatch when value does not match with regex
 	ErrStringMatch ErrorGen = NewErrorGen("does not match")
+
+	// ErrStringIn value is not one of
+	ErrStringOneOf ErrorGen = NewErrorGen("value is not one of %v")
 )
 
 // used in Number

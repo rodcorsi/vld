@@ -87,6 +87,19 @@ func (s *stringVld) Match(rg *regexp.Regexp) *stringVld {
 	return s
 }
 
+func (s *stringVld) OneOf(values []string) *stringVld {
+	if s.err != nil {
+		return s
+	}
+	for _, v := range values {
+		if v == s.value {
+			return s
+		}
+	}
+	s.err = ErrStringOneOf.Gen(values)
+	return s
+}
+
 func (s *stringVld) Error() error {
 	return s.err
 }

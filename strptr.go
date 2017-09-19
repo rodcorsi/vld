@@ -24,7 +24,10 @@ func (s *strptrVld) Required() *strptrVld {
 }
 
 func (s *strptrVld) GT(length int) *strptrVld {
-	if s.err != nil || len(*s.value) > length {
+	if s.err != nil {
+		return s
+	}
+	if s.value != nil && len(*s.value) > length {
 		return s
 	}
 	s.err = ErrStringGT.Gen(length)
@@ -32,7 +35,10 @@ func (s *strptrVld) GT(length int) *strptrVld {
 }
 
 func (s *strptrVld) GTE(length int) *strptrVld {
-	if s.err != nil || len(*s.value) >= length {
+	if s.err != nil {
+		return s
+	}
+	if s.value != nil && len(*s.value) >= length {
 		return s
 	}
 	s.err = ErrStringGTE.Gen(length)
@@ -40,7 +46,10 @@ func (s *strptrVld) GTE(length int) *strptrVld {
 }
 
 func (s *strptrVld) LT(length int) *strptrVld {
-	if s.err != nil || len(*s.value) < length {
+	if s.err != nil {
+		return s
+	}
+	if s.value != nil && len(*s.value) < length {
 		return s
 	}
 	s.err = ErrStringLT.Gen(length)
@@ -48,7 +57,10 @@ func (s *strptrVld) LT(length int) *strptrVld {
 }
 
 func (s *strptrVld) LTE(length int) *strptrVld {
-	if s.err != nil || len(*s.value) <= length {
+	if s.err != nil {
+		return s
+	}
+	if s.value != nil && len(*s.value) <= length {
 		return s
 	}
 	s.err = ErrStringLTE.Gen(length)
@@ -79,9 +91,27 @@ func (s *strptrVld) Match(rg *regexp.Regexp) *strptrVld {
 	if s.err != nil {
 		return s
 	}
-	if !rg.MatchString(*s.value) {
-		s.err = ErrStringMatch.Gen()
+	if s.value != nil {
+		if rg.MatchString(*s.value) {
+			return s
+		}
 	}
+	s.err = ErrStringMatch.Gen()
+	return s
+}
+
+func (s *strptrVld) OneOf(values []string) *strptrVld {
+	if s.err != nil {
+		return s
+	}
+	if s.value != nil {
+		for _, v := range values {
+			if v == *s.value {
+				return s
+			}
+		}
+	}
+	s.err = ErrStringOneOf.Gen(values)
 	return s
 }
 
