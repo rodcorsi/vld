@@ -1,5 +1,7 @@
 package vld
 
+import "regexp"
+
 type strptrVld struct {
 	err   error
 	value *string
@@ -69,6 +71,16 @@ func (s *strptrVld) Len(length int) *strptrVld {
 	}
 	if s.value == nil || (len(*s.value) != length) {
 		s.err = ErrStringLen.Gen(length)
+	}
+	return s
+}
+
+func (s *strptrVld) Match(rg *regexp.Regexp) *strptrVld {
+	if s.err != nil {
+		return s
+	}
+	if !rg.MatchString(*s.value) {
+		s.err = ErrStringMatch.Gen()
 	}
 	return s
 }

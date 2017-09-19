@@ -20,11 +20,14 @@ var (
 	// ErrStringLTE when length is not smaller or equal than
 	ErrStringLTE ErrorGen = NewErrorGen("length is not smaller or equal than %v")
 
-	// ErrStringLength when value is out of value
-	ErrStringLength ErrorGen = NewErrorGen("out of value(min:%v max:%v)")
+	// ErrStringLength when value is out of length
+	ErrStringLength ErrorGen = NewErrorGen("out of length(min:%v max:%v)")
 
 	// ErrStringLen when value is out of len
 	ErrStringLen ErrorGen = NewErrorGen("out of len(%v)")
+
+	// ErrStringMatch when value does not match with regex
+	ErrStringMatch ErrorGen = NewErrorGen("does not match")
 )
 
 // used in Number
