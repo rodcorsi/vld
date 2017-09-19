@@ -20,42 +20,34 @@ func String(value string) *stringVld {
 }
 
 func (s *stringVld) Required() *stringVld {
-	if s.err != nil {
+	if s.err != nil || s.value != "" {
 		return s
 	}
-	if s.value == "" {
-		s.err = ErrRequired.Gen()
-	}
+	s.err = ErrRequired.Gen()
 	return s
 }
 
 func (s *stringVld) GT(length int) *stringVld {
-	if s.err != nil || len(s.value) > length {
+	if s.err != nil || s.value == "" || len(s.value) > length {
 		return s
 	}
-	if s.value != "" {
-		s.err = ErrStringGT.Gen(length)
-	}
+	s.err = ErrStringGT.Gen(length)
 	return s
 }
 
 func (s *stringVld) GTE(length int) *stringVld {
-	if s.err != nil || len(s.value) >= length {
+	if s.err != nil || s.value == "" || len(s.value) >= length {
 		return s
 	}
-	if s.value != "" {
-		s.err = ErrStringGTE.Gen(length)
-	}
+	s.err = ErrStringGTE.Gen(length)
 	return s
 }
 
 func (s *stringVld) LT(length int) *stringVld {
-	if s.err != nil || len(s.value) < length {
+	if s.err != nil || s.value == "" || len(s.value) < length {
 		return s
 	}
-	if s.value != "" {
-		s.err = ErrStringLT.Gen(length)
-	}
+	s.err = ErrStringLT.Gen(length)
 	return s
 }
 
@@ -69,57 +61,47 @@ func (s *stringVld) LTE(length int) *stringVld {
 }
 
 func (s *stringVld) Length(min, max int) *stringVld {
-	if s.err != nil {
+	if s.err != nil || s.value == "" || (len(s.value) >= min && len(s.value) <= max) {
 		return s
 	}
-	if s.value != "" && (len(s.value) < min || len(s.value) > max) {
-		s.err = ErrStringLength.Gen(min, max)
-	}
+	s.err = ErrStringLength.Gen(min, max)
 	return s
 }
 
 func (s *stringVld) Len(length int) *stringVld {
-	if s.err != nil {
+	if s.err != nil || s.value == "" || len(s.value) == length {
 		return s
 	}
-	if s.value != "" && len(s.value) != length {
-		s.err = ErrStringLen.Gen(length)
-	}
+	s.err = ErrStringLen.Gen(length)
 	return s
 }
 
 func (s *stringVld) Match(rg *regexp.Regexp) *stringVld {
-	if s.err != nil {
+	if s.err != nil || s.value == "" || rg.MatchString(s.value) {
 		return s
 	}
-	if s.value != "" && !rg.MatchString(s.value) {
-		s.err = ErrStringMatch.Gen()
-	}
+	s.err = ErrStringMatch.Gen()
 	return s
 }
 
 func (s *stringVld) OneOf(values []string) *stringVld {
-	if s.err != nil {
+	if s.err != nil || s.value == "" {
 		return s
 	}
-	if s.value != "" {
-		for _, v := range values {
-			if v == s.value {
-				return s
-			}
+	for _, v := range values {
+		if v == s.value {
+			return s
 		}
-		s.err = ErrStringOneOf.Gen(values)
 	}
+	s.err = ErrStringOneOf.Gen(values)
 	return s
 }
 
 func (s *stringVld) IsEmail() *stringVld {
-	if s.err != nil {
+	if s.err != nil || s.value == "" || emailRegex.MatchString(s.value) {
 		return s
 	}
-	if s.value != "" && !emailRegex.MatchString(s.value) {
-		s.err = ErrStringIsEmail.Gen()
-	}
+	s.err = ErrStringIsEmail.Gen()
 	return s
 }
 

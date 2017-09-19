@@ -14,20 +14,15 @@ func StrPtr(value *string) *strptrVld {
 }
 
 func (s *strptrVld) Required() *strptrVld {
-	if s.err != nil {
+	if s.err != nil || s.value != nil {
 		return s
 	}
-	if s.value == nil {
-		s.err = ErrRequired.Gen()
-	}
+	s.err = ErrRequired.Gen()
 	return s
 }
 
 func (s *strptrVld) GT(length int) *strptrVld {
-	if s.err != nil {
-		return s
-	}
-	if s.value != nil && len(*s.value) > length {
+	if s.err != nil || s.value == nil || len(*s.value) > length {
 		return s
 	}
 	s.err = ErrStringGT.Gen(length)
@@ -35,10 +30,7 @@ func (s *strptrVld) GT(length int) *strptrVld {
 }
 
 func (s *strptrVld) GTE(length int) *strptrVld {
-	if s.err != nil {
-		return s
-	}
-	if s.value != nil && len(*s.value) >= length {
+	if s.err != nil || s.value == nil || len(*s.value) >= length {
 		return s
 	}
 	s.err = ErrStringGTE.Gen(length)
@@ -46,10 +38,7 @@ func (s *strptrVld) GTE(length int) *strptrVld {
 }
 
 func (s *strptrVld) LT(length int) *strptrVld {
-	if s.err != nil {
-		return s
-	}
-	if s.value != nil && len(*s.value) < length {
+	if s.err != nil || s.value == nil || len(*s.value) < length {
 		return s
 	}
 	s.err = ErrStringLT.Gen(length)
@@ -57,10 +46,7 @@ func (s *strptrVld) LT(length int) *strptrVld {
 }
 
 func (s *strptrVld) LTE(length int) *strptrVld {
-	if s.err != nil {
-		return s
-	}
-	if s.value != nil && len(*s.value) <= length {
+	if s.err != nil || s.value == nil || len(*s.value) <= length {
 		return s
 	}
 	s.err = ErrStringLTE.Gen(length)
@@ -68,47 +54,36 @@ func (s *strptrVld) LTE(length int) *strptrVld {
 }
 
 func (s *strptrVld) Length(min, max int) *strptrVld {
-	if s.err != nil {
+	if s.err != nil || s.value == nil || (len(*s.value) >= min && len(*s.value) <= max) {
 		return s
 	}
-	if s.value == nil || (len(*s.value) < min || len(*s.value) > max) {
-		s.err = ErrStringLength.Gen(min, max)
-	}
+	s.err = ErrStringLength.Gen(min, max)
 	return s
 }
 
 func (s *strptrVld) Len(length int) *strptrVld {
-	if s.err != nil {
+	if s.err != nil || s.value == nil || len(*s.value) == length {
 		return s
 	}
-	if s.value == nil || (len(*s.value) != length) {
-		s.err = ErrStringLen.Gen(length)
-	}
+	s.err = ErrStringLen.Gen(length)
 	return s
 }
 
 func (s *strptrVld) Match(rg *regexp.Regexp) *strptrVld {
-	if s.err != nil {
+	if s.err != nil || s.value == nil || rg.MatchString(*s.value) {
 		return s
-	}
-	if s.value != nil {
-		if rg.MatchString(*s.value) {
-			return s
-		}
 	}
 	s.err = ErrStringMatch.Gen()
 	return s
 }
 
 func (s *strptrVld) OneOf(values []string) *strptrVld {
-	if s.err != nil {
+	if s.err != nil || s.value == nil {
 		return s
 	}
-	if s.value != nil {
-		for _, v := range values {
-			if v == *s.value {
-				return s
-			}
+	for _, v := range values {
+		if v == *s.value {
+			return s
 		}
 	}
 	s.err = ErrStringOneOf.Gen(values)
@@ -116,13 +91,8 @@ func (s *strptrVld) OneOf(values []string) *strptrVld {
 }
 
 func (s *strptrVld) IsEmail() *strptrVld {
-	if s.err != nil {
+	if s.err != nil || s.value == nil || emailRegex.MatchString(*s.value) {
 		return s
-	}
-	if s.value != nil {
-		if emailRegex.MatchString(*s.value) {
-			return s
-		}
 	}
 	s.err = ErrStringIsEmail.Gen()
 	return s
