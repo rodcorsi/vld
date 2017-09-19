@@ -2,6 +2,8 @@
 
 Package written in Go for validation of string, numbers and structs without use of tags
 
+**Vld may not be considered stable just yet!**
+
 ## Installation
 
 You'll need Go installed
@@ -30,8 +32,8 @@ _ = validate.Ok("id", vld.String(p.ID).Required().Length(1, 20).Error()) &&
     validate.Ok("descr", vld.String(string(p.Descr)).Length(2, 20).Error()) &&
     validate.Ok("qty", vld.NumI64(p.Qty).Range(2, 20).Error())
 
-if validate.HasError() {
-    fmt.Println(validate.Error())
+if err := validate.Error(); err != nil {
+    fmt.Println(err)
 }
 ```
 
