@@ -4,9 +4,6 @@ import (
 	"fmt"
 )
 
-// compile check
-var _ FieldError = &fieldError{}
-
 type FieldError interface {
 	Field() string
 	Message() string
