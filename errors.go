@@ -2,6 +2,9 @@ package vld
 
 // Used in String, StrPtr, Number
 var (
+	// ErrValidation when validation add some errors
+	ErrValidation ErrorGen = NewErrorGen("validation for '%v' failed: %v")
+
 	// ErrRequired when value is required
 	ErrRequired ErrorGen = NewErrorGen("required")
 )

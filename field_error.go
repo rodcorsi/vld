@@ -1,9 +1,5 @@
 package vld
 
-import (
-	"fmt"
-)
-
 type FieldError interface {
 	Field() string
 	Message() string
@@ -16,7 +12,7 @@ type fieldError struct {
 }
 
 func (e *fieldError) Error() string {
-	return fmt.Sprintf("validation for '%v' failed: %v", e.fieldName, e.err.Error())
+	return ErrValidation.Gen(e.fieldName, e.err.Error()).Error()
 }
 
 func (e *fieldError) Field() string {
