@@ -35,3 +35,7 @@ func (e *Validate) Error() error {
 	}
 	return errors.New(buffer.String())
 }
+
+func (e *Validate) FieldError() []FieldError {
+	return e.errs
+}
