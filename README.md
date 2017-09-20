@@ -1,5 +1,8 @@
 # vld
 
+[![Build Status](https://travis-ci.org/rodcorsi/vld.svg?branch=master)](https://travis-ci.org/rodcorsi/vld)
+[![Coverage Status](https://coveralls.io/repos/github/rodcorsi/vld/badge.svg?branch=master)](https://coveralls.io/github/rodcorsi/vld?branch=master)
+
 Package written in Go for validation of string, numbers and structs without use of tags
 
 **Vld may not be considered stable just yet!**
