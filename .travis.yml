@@ -1,0 +1,16 @@
+language: go
+go:
+  - 1.7
+  - master
+
+before_install:
+  - go get -v github.com/mattn/goveralls
+
+install:
+  - go install
+
+script:
+  - make test
+
+after_script:
+  - $HOME/gopath/bin/goveralls -coverprofile=cover.out -service=travis-ci
