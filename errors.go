@@ -1,58 +1,84 @@
 package vld
 
-// Used in String, StrPtr, Number
-var (
+import "fmt"
+
+const (
+	ErrValidation    = "ErrValidation"
+	ErrRequired      = "ErrRequired"
+	ErrStringGT      = "ErrStringGT"
+	ErrStringGTE     = "ErrStringGTE"
+	ErrStringLT      = "ErrStringLT"
+	ErrStringLTE     = "ErrStringLTE"
+	ErrStringLength  = "ErrStringLength"
+	ErrStringLen     = "ErrStringLen"
+	ErrStringMatch   = "ErrStringMatch"
+	ErrStringOneOf   = "ErrStringOneOf"
+	ErrStringIsEmail = "ErrStringIsEmail"
+	ErrNumberRange   = "ErrNumberRange"
+	ErrNumberGT      = "ErrNumberGT"
+	ErrNumberGTE     = "ErrNumberGTE"
+	ErrNumberLT      = "ErrNumberLT"
+	ErrNumberLTE     = "ErrNumberLTE"
+)
+
+var defaultErrMessage = map[string]string{
+	// Used in String, StrPtr, Number
 	// ErrValidation when validation add some errors
-	ErrValidation ErrorGen = NewErrorGen("validation for '%v' failed: %v")
+	ErrValidation: "validation for '%v' failed: %v",
 
 	// ErrRequired when value is required
-	ErrRequired ErrorGen = NewErrorGen("required")
-)
+	ErrRequired: "required",
 
-// used in String, StrPtr
-var (
+	// Used in String, StrPtr
 	// ErrStringGT when length is not greater than
-	ErrStringGT ErrorGen = NewErrorGen("length is not greater than %v")
+	ErrStringGT: "length is not greater than %v",
 
 	// ErrStringGTE when length is not greater or equal than
-	ErrStringGTE ErrorGen = NewErrorGen("length is not greater or equal than %v")
+	ErrStringGTE: "length is not greater or equal than %v",
 
 	// ErrStringLT when length is not smaller than
-	ErrStringLT ErrorGen = NewErrorGen("length is not smaller than %v")
+	ErrStringLT: "length is not smaller than %v",
 
 	// ErrStringLTE when length is not smaller or equal than
-	ErrStringLTE ErrorGen = NewErrorGen("length is not smaller or equal than %v")
+	ErrStringLTE: "length is not smaller or equal than %v",
 
 	// ErrStringLength when value is out of length
-	ErrStringLength ErrorGen = NewErrorGen("out of length(min:%v max:%v)")
+	ErrStringLength: "out of length(min:%v max:%v)",
 
 	// ErrStringLen when value is out of len
-	ErrStringLen ErrorGen = NewErrorGen("out of len(%v)")
+	ErrStringLen: "out of len(%v)",
 
 	// ErrStringMatch when value does not match with regex
-	ErrStringMatch ErrorGen = NewErrorGen("does not match")
+	ErrStringMatch: "does not match",
 
 	// ErrStringIn value is not one of
-	ErrStringOneOf ErrorGen = NewErrorGen("value is not one of %v")
+	ErrStringOneOf: "value is not one of %v",
 
 	// ErrStringIsEmail value is not a valid email
-	ErrStringIsEmail ErrorGen = NewErrorGen("value is not a valid email")
-)
+	ErrStringIsEmail: "value is not a valid email",
 
-// used in Number
-var (
+	// Used in Number
 	// ErrNumberRange when value is out of range
-	ErrNumberRange ErrorGen = NewErrorGen("out of range(min:%v max:%v)")
+	ErrNumberRange: "out of range(min:%v max:%v)",
 
 	// ErrNumberGT when value is not greater than
-	ErrNumberGT ErrorGen = NewErrorGen("value is not greater than %v")
+	ErrNumberGT: "value is not greater than %v",
 
 	// ErrNumberGTE when value is not greater or equal than
-	ErrNumberGTE ErrorGen = NewErrorGen("value is not greater or equal than %v")
+	ErrNumberGTE: "value is not greater or equal than %v",
 
 	// ErrNumberLT when value is not smaller than
-	ErrNumberLT ErrorGen = NewErrorGen("value is not smaller than %v")
+	ErrNumberLT: "value is not smaller than %v",
 
 	// ErrNumberLTE when value is not smaller or equal than
-	ErrNumberLTE ErrorGen = NewErrorGen("value is not smaller or equal than %v")
-)
+	ErrNumberLTE: "value is not smaller or equal than %v",
+}
+
+type FormatMessageFunc func(errorID string, args Args) string
+
+var FormatMessage FormatMessageFunc = func(errorID string, args Args) string {
+	if format, ok := defaultErrMessage[errorID]; ok {
+		return fmt.Sprintf(format, args...)
+	}
+	return fmt.Sprint(errorID, args)
+}

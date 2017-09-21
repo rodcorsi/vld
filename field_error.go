@@ -2,23 +2,23 @@ package vld
 
 type FieldError interface {
 	Field() string
-	Message() string
+	UnitError() UnitError
 	Error() string
 }
 
 type fieldError struct {
 	fieldName string
-	err       error
+	err       UnitError
 }
 
 func (e *fieldError) Error() string {
-	return ErrValidation.Gen(e.fieldName, e.err.Error()).Error()
+	return FormatMessage(ErrValidation, Args{e.fieldName, e.err.Error()})
 }
 
 func (e *fieldError) Field() string {
 	return e.fieldName
 }
 
-func (e *fieldError) Message() string {
-	return e.err.Error()
+func (e *fieldError) UnitError() UnitError {
+	return e.err
 }

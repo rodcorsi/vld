@@ -13,7 +13,7 @@ func New() *Validate {
 	return &Validate{}
 }
 
-func (e *Validate) Ok(fieldName string, err error) bool {
+func (e *Validate) Ok(fieldName string, err UnitError) bool {
 	if err != nil {
 		e.errs = append(e.errs, &fieldError{
 			fieldName: fieldName,

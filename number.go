@@ -1,7 +1,7 @@
 package vld
 
 type numberVld struct {
-	err   error
+	err   UnitError
 	value float64
 	zero  bool
 }
@@ -45,7 +45,7 @@ func (n *numberVld) Required() *numberVld {
 	if n.err != nil || !n.zero {
 		return n
 	}
-	n.err = ErrRequired.Gen()
+	n.err = newUnitError(ErrRequired, Args{})
 	return n
 }
 
@@ -53,7 +53,7 @@ func (n *numberVld) GT(value float64) *numberVld {
 	if n.err != nil || n.zero || n.value > value {
 		return n
 	}
-	n.err = ErrNumberGT.Gen(value)
+	n.err = newUnitError(ErrNumberGT, Args{value})
 	return n
 }
 
@@ -61,7 +61,7 @@ func (n *numberVld) GTE(value float64) *numberVld {
 	if n.err != nil || n.zero || n.value >= value {
 		return n
 	}
-	n.err = ErrNumberGTE.Gen(value)
+	n.err = newUnitError(ErrNumberGTE, Args{value})
 	return n
 }
 
@@ -69,7 +69,7 @@ func (n *numberVld) LT(value float64) *numberVld {
 	if n.err != nil || n.zero || n.value < value {
 		return n
 	}
-	n.err = ErrNumberLT.Gen(value)
+	n.err = newUnitError(ErrNumberLT, Args{value})
 	return n
 }
 
@@ -77,7 +77,7 @@ func (n *numberVld) LTE(value float64) *numberVld {
 	if n.err != nil || n.zero || n.value <= value {
 		return n
 	}
-	n.err = ErrNumberLTE.Gen(value)
+	n.err = newUnitError(ErrNumberLTE, Args{value})
 	return n
 }
 
@@ -85,10 +85,10 @@ func (n *numberVld) Range(min, max float64) *numberVld {
 	if n.err != nil || n.zero || (n.value >= min && n.value <= max) {
 		return n
 	}
-	n.err = ErrNumberRange.Gen(min, max)
+	n.err = newUnitError(ErrNumberRange, Args{min, max})
 	return n
 }
 
-func (n *numberVld) Error() error {
+func (n *numberVld) Error() UnitError {
 	return n.err
 }

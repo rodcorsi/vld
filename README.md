@@ -42,14 +42,16 @@ if err := validate.Error(); err != nil {
 
 ## Benchmark
 
+Benchmark comparing other validator
+
 ```bash
 $ go test -run=NONE -bench=. -benchmem ./example/
-goos: windows
+goos: linux
 goarch: amd64
 pkg: github.com/rodcorsi/vld/example
-BenchmarkGovalidator-4            100000             18983 ns/op            3072 B/op         48 allocs/op
-BenchmarkValidator-4             2000000               973 ns/op              64 B/op          2 allocs/op
-BenchmarkOzzo-4                   300000              5310 ns/op            2104 B/op         50 allocs/op
-BenchmarkFourSigma-4             1000000              1395 ns/op             688 B/op         25 allocs/op
-BenchmarkVld-4                  50000000                27.0 ns/op             0 B/op          0 allocs/op
+BenchmarkGovalidator-4            100000             17955 ns/op            2424 B/op         39 allocs/op
+BenchmarkValidator-4             1000000              1045 ns/op              64 B/op          2 allocs/op
+BenchmarkOzzo-4                   200000              7863 ns/op            2104 B/op         50 allocs/op
+BenchmarkFourSigma-4              500000              2103 ns/op             688 B/op         25 allocs/op
+BenchmarkVld-4                  100000000               16.7 ns/op             0 B/op          0 allocs/op
 ```

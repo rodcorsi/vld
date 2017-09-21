@@ -23,7 +23,7 @@ func main() {
 		ID:    "12",
 		OldID: &oldID,
 		Descr: "ff",
-		Qty:   10,
+		Qty:   1,
 	}
 
 	validate := vld.New()
