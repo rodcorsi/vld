@@ -38,7 +38,7 @@ func (s *stringVld) Required() *stringVld {
 	if s.err != nil || !s.zero {
 		return s
 	}
-	s.err = newUnitError(ErrRequired, Args{})
+	s.err = NewUnitError(ErrRequired, Args{})
 	return s
 }
 
@@ -46,7 +46,7 @@ func (s *stringVld) GT(length int) *stringVld {
 	if s.err != nil || s.zero || len(s.value) > length {
 		return s
 	}
-	s.err = newUnitError(ErrStringGT, Args{length})
+	s.err = NewUnitError(ErrStringGT, Args{length})
 	return s
 }
 
@@ -54,7 +54,7 @@ func (s *stringVld) GTE(length int) *stringVld {
 	if s.err != nil || s.zero || len(s.value) >= length {
 		return s
 	}
-	s.err = newUnitError(ErrStringGTE, Args{length})
+	s.err = NewUnitError(ErrStringGTE, Args{length})
 	return s
 }
 
@@ -62,7 +62,7 @@ func (s *stringVld) LT(length int) *stringVld {
 	if s.err != nil || s.zero || len(s.value) < length {
 		return s
 	}
-	s.err = newUnitError(ErrStringLT, Args{length})
+	s.err = NewUnitError(ErrStringLT, Args{length})
 	return s
 }
 
@@ -70,7 +70,7 @@ func (s *stringVld) LTE(length int) *stringVld {
 	if s.err != nil || len(s.value) <= length {
 		return s
 	}
-	s.err = newUnitError(ErrStringLTE, Args{length})
+	s.err = NewUnitError(ErrStringLTE, Args{length})
 
 	return s
 }
@@ -79,7 +79,7 @@ func (s *stringVld) Length(min, max int) *stringVld {
 	if s.err != nil || s.zero || (len(s.value) >= min && len(s.value) <= max) {
 		return s
 	}
-	s.err = newUnitError(ErrStringLength, Args{min, max})
+	s.err = NewUnitError(ErrStringLength, Args{min, max})
 	return s
 }
 
@@ -87,7 +87,7 @@ func (s *stringVld) Len(length int) *stringVld {
 	if s.err != nil || s.zero || len(s.value) == length {
 		return s
 	}
-	s.err = newUnitError(ErrStringLen, Args{length})
+	s.err = NewUnitError(ErrStringLen, Args{length})
 	return s
 }
 
@@ -95,7 +95,7 @@ func (s *stringVld) Match(rg *regexp.Regexp) *stringVld {
 	if s.err != nil || s.zero || rg.MatchString(s.value) {
 		return s
 	}
-	s.err = newUnitError(ErrStringMatch, Args{})
+	s.err = NewUnitError(ErrStringMatch, Args{})
 	return s
 }
 
@@ -108,7 +108,7 @@ func (s *stringVld) OneOf(values []string) *stringVld {
 			return s
 		}
 	}
-	s.err = newUnitError(ErrStringOneOf, Args{values})
+	s.err = NewUnitError(ErrStringOneOf, Args{values})
 	return s
 }
 
@@ -116,7 +116,7 @@ func (s *stringVld) IsEmail() *stringVld {
 	if s.err != nil || s.zero || emailRegex.MatchString(s.value) {
 		return s
 	}
-	s.err = newUnitError(ErrStringIsEmail, Args{})
+	s.err = NewUnitError(ErrStringIsEmail, Args{})
 	return s
 }
 

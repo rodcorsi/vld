@@ -45,7 +45,7 @@ func (n *numberVld) Required() *numberVld {
 	if n.err != nil || !n.zero {
 		return n
 	}
-	n.err = newUnitError(ErrRequired, Args{})
+	n.err = NewUnitError(ErrRequired, Args{})
 	return n
 }
 
@@ -53,7 +53,7 @@ func (n *numberVld) GT(value float64) *numberVld {
 	if n.err != nil || n.zero || n.value > value {
 		return n
 	}
-	n.err = newUnitError(ErrNumberGT, Args{value})
+	n.err = NewUnitError(ErrNumberGT, Args{value})
 	return n
 }
 
@@ -61,7 +61,7 @@ func (n *numberVld) GTE(value float64) *numberVld {
 	if n.err != nil || n.zero || n.value >= value {
 		return n
 	}
-	n.err = newUnitError(ErrNumberGTE, Args{value})
+	n.err = NewUnitError(ErrNumberGTE, Args{value})
 	return n
 }
 
@@ -69,7 +69,7 @@ func (n *numberVld) LT(value float64) *numberVld {
 	if n.err != nil || n.zero || n.value < value {
 		return n
 	}
-	n.err = newUnitError(ErrNumberLT, Args{value})
+	n.err = NewUnitError(ErrNumberLT, Args{value})
 	return n
 }
 
@@ -77,7 +77,7 @@ func (n *numberVld) LTE(value float64) *numberVld {
 	if n.err != nil || n.zero || n.value <= value {
 		return n
 	}
-	n.err = newUnitError(ErrNumberLTE, Args{value})
+	n.err = NewUnitError(ErrNumberLTE, Args{value})
 	return n
 }
 
@@ -85,7 +85,7 @@ func (n *numberVld) Range(min, max float64) *numberVld {
 	if n.err != nil || n.zero || (n.value >= min && n.value <= max) {
 		return n
 	}
-	n.err = newUnitError(ErrNumberRange, Args{min, max})
+	n.err = NewUnitError(ErrNumberRange, Args{min, max})
 	return n
 }
 

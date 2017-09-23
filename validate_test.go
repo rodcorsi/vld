@@ -9,7 +9,7 @@ func TestValidate_Ok(t *testing.T) {
 	if !validate.Ok("", nil) {
 		t.Error("Ok() expected ok for nil error")
 	}
-	if validate.Ok("", newUnitError("", nil)) {
+	if validate.Ok("", NewUnitError("", nil)) {
 		t.Error("Ok() expected false for error")
 	}
 }
@@ -23,11 +23,11 @@ func TestValidate_Error(t *testing.T) {
 	if err := validate.Error(); err != nil {
 		t.Error("Error() expected nil", err)
 	}
-	validate.Ok("", newUnitError("", nil))
+	validate.Ok("", NewUnitError("", nil))
 	if err := validate.Error(); err == nil {
 		t.Error("Error() expected not nil")
 	}
-	validate.Ok("", newUnitError("", nil))
+	validate.Ok("", NewUnitError("", nil))
 	if err := validate.Error(); err == nil {
 		t.Error("Error() expected not nil 2 errors")
 	}
@@ -42,7 +42,7 @@ func TestValidate_FieldError(t *testing.T) {
 		t.Error("FieldError() expected nil")
 	}
 
-	validate.Ok("field1", newUnitError("errorID1", nil))
+	validate.Ok("field1", NewUnitError("errorID1", nil))
 	fr = validate.FieldError()
 	if len(fr) != 1 {
 		t.Errorf("FieldError() expected len == 1 result:%v", fr)
@@ -51,7 +51,7 @@ func TestValidate_FieldError(t *testing.T) {
 		t.Errorf("FieldError() expected {field1, errorID1} result:%+v", fr)
 	}
 
-	validate.Ok("field2", newUnitError("errorID2", nil))
+	validate.Ok("field2", NewUnitError("errorID2", nil))
 	fr = validate.FieldError()
 	if len(fr) != 2 {
 		t.Errorf("FieldError() expected len == 2 result:%v", fr)

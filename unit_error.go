@@ -13,7 +13,7 @@ type unitError struct {
 	args    Args
 }
 
-func newUnitError(errorID string, args Args) UnitError {
+func NewUnitError(errorID string, args Args) UnitError {
 	return &unitError{
 		errorID: errorID,
 		args:    args,
