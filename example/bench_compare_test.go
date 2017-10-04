@@ -12,7 +12,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-type product struct {
+type productGoValidator struct {
 	ID    string  `valid:"required,length(1|20)"`
 	OldID *string `valid:"length(2|20)"`
 	Descr myStr   `valid:"length(2|20)"`
@@ -28,7 +28,7 @@ type productv9 struct {
 
 func BenchmarkGovalidator(b *testing.B) {
 	oldID := "123"
-	p := product{
+	p := productGoValidator{
 		ID:    "12",
 		OldID: &oldID,
 		Descr: "ff",

@@ -8,7 +8,7 @@ import (
 
 type myStr string
 
-type Product struct {
+type product struct {
 	ID     string
 	OldID  *string
 	Descr  myStr
@@ -19,7 +19,7 @@ type Product struct {
 func main() {
 
 	oldID := "123"
-	p := Product{
+	p := product{
 		ID:    "12",
 		OldID: &oldID,
 		Descr: "ff",
