@@ -11,29 +11,29 @@ type testNumber struct {
 }
 
 func Test_Number_Required(t *testing.T) {
-	test_Number_Required(t, "Number", []testNumber{
+	testNumberRequired(t, "Number", []testNumber{
 		{"1", Number(0), true},
 		{"2", Number(1), false},
 	})
-	test_Number_Required(t, "NumF32", []testNumber{
+	testNumberRequired(t, "NumF32", []testNumber{
 		{"1", NumF32(0), true},
 		{"2", NumF32(1), false},
 	})
-	test_Number_Required(t, "NumF64", []testNumber{
+	testNumberRequired(t, "NumF64", []testNumber{
 		{"1", NumF64(0), true},
 		{"2", NumF64(1), false},
 	})
-	test_Number_Required(t, "NumI32", []testNumber{
+	testNumberRequired(t, "NumI32", []testNumber{
 		{"1", NumI32(0), true},
 		{"2", NumI32(1), false},
 	})
-	test_Number_Required(t, "NumI64", []testNumber{
+	testNumberRequired(t, "NumI64", []testNumber{
 		{"1", NumI64(0), true},
 		{"2", NumI64(1), false},
 	})
 }
 
-func test_Number_Required(t *testing.T, detail string, tests []testNumber) {
+func testNumberRequired(t *testing.T, detail string, tests []testNumber) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.Required().Error(); (err != nil) != tt.wantErr {
@@ -51,7 +51,7 @@ type testNumberValue struct {
 }
 
 func Test_Number_GT(t *testing.T) {
-	test_Number_GT(t, "Number", []testNumberValue{
+	testNumberGT(t, "Number", []testNumberValue{
 		{"1", Number(0), 0, false},            // test zero
 		{"2", Number(0), 10, false},           // not required
 		{"3", Number(0).Required(), 10, true}, // required
@@ -59,7 +59,7 @@ func Test_Number_GT(t *testing.T) {
 		{"5", Number(2), 1, false},
 		{"6", Number(1), 10, true},
 	})
-	test_Number_GT(t, "NumF32", []testNumberValue{
+	testNumberGT(t, "NumF32", []testNumberValue{
 		{"1", NumF32(0), 0, false},            // test zero
 		{"2", NumF32(0), 10, false},           // not required
 		{"3", NumF32(0).Required(), 10, true}, // required
@@ -67,7 +67,7 @@ func Test_Number_GT(t *testing.T) {
 		{"5", NumF32(2), 1, false},
 		{"6", NumF32(1), 10, true},
 	})
-	test_Number_GT(t, "NumF64", []testNumberValue{
+	testNumberGT(t, "NumF64", []testNumberValue{
 		{"1", NumF64(0), 0, false},            // test zero
 		{"2", NumF64(0), 10, false},           // not required
 		{"3", NumF64(0).Required(), 10, true}, // required
@@ -75,7 +75,7 @@ func Test_Number_GT(t *testing.T) {
 		{"5", NumF64(2), 1, false},
 		{"6", NumF64(1), 10, true},
 	})
-	test_Number_GT(t, "NumI32", []testNumberValue{
+	testNumberGT(t, "NumI32", []testNumberValue{
 		{"1", NumI32(0), 0, false},            // test zero
 		{"2", NumI32(0), 10, false},           // not required
 		{"3", NumI32(0).Required(), 10, true}, // required
@@ -83,7 +83,7 @@ func Test_Number_GT(t *testing.T) {
 		{"5", NumI32(2), 1, false},
 		{"6", NumI32(1), 10, true},
 	})
-	test_Number_GT(t, "NumI64", []testNumberValue{
+	testNumberGT(t, "NumI64", []testNumberValue{
 		{"1", NumI64(0), 0, false},            // test zero
 		{"2", NumI64(0), 10, false},           // not required
 		{"3", NumI64(0).Required(), 10, true}, // required
@@ -93,7 +93,7 @@ func Test_Number_GT(t *testing.T) {
 	})
 }
 
-func test_Number_GT(t *testing.T, detail string, tests []testNumberValue) {
+func testNumberGT(t *testing.T, detail string, tests []testNumberValue) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.GT(tt.value).Error(); (err != nil) != tt.wantErr {
@@ -104,7 +104,7 @@ func test_Number_GT(t *testing.T, detail string, tests []testNumberValue) {
 }
 
 func Test_Number_GTE(t *testing.T) {
-	test_Number_GTE(t, "Number", []testNumberValue{
+	testNumberGTE(t, "Number", []testNumberValue{
 		{"1", Number(0), 0, false},            // test zero
 		{"2", Number(0), 10, false},           // not required
 		{"3", Number(0).Required(), 10, true}, // required
@@ -112,7 +112,7 @@ func Test_Number_GTE(t *testing.T) {
 		{"5", Number(1), 1, false},
 		{"6", Number(1), 10, true},
 	})
-	test_Number_GTE(t, "NumF32", []testNumberValue{
+	testNumberGTE(t, "NumF32", []testNumberValue{
 		{"1", NumF32(0), 0, false},            // test zero
 		{"2", NumF32(0), 10, false},           // not required
 		{"3", NumF32(0).Required(), 10, true}, // required
@@ -120,7 +120,7 @@ func Test_Number_GTE(t *testing.T) {
 		{"5", NumF32(1), 1, false},
 		{"6", NumF32(1), 10, true},
 	})
-	test_Number_GTE(t, "NumF64", []testNumberValue{
+	testNumberGTE(t, "NumF64", []testNumberValue{
 		{"1", NumF64(0), 0, false},            // test zero
 		{"2", NumF64(0), 10, false},           // not required
 		{"3", NumF64(0).Required(), 10, true}, // required
@@ -128,7 +128,7 @@ func Test_Number_GTE(t *testing.T) {
 		{"5", NumF64(1), 1, false},
 		{"6", NumF64(1), 10, true},
 	})
-	test_Number_GTE(t, "NumI32", []testNumberValue{
+	testNumberGTE(t, "NumI32", []testNumberValue{
 		{"1", NumI32(0), 0, false},            // test zero
 		{"2", NumI32(0), 10, false},           // not required
 		{"3", NumI32(0).Required(), 10, true}, // required
@@ -136,7 +136,7 @@ func Test_Number_GTE(t *testing.T) {
 		{"5", NumI32(1), 1, false},
 		{"6", NumI32(1), 10, true},
 	})
-	test_Number_GTE(t, "NumI64", []testNumberValue{
+	testNumberGTE(t, "NumI64", []testNumberValue{
 		{"1", NumI64(0), 0, false},            // test zero
 		{"2", NumI64(0), 10, false},           // not required
 		{"3", NumI64(0).Required(), 10, true}, // required
@@ -146,7 +146,7 @@ func Test_Number_GTE(t *testing.T) {
 	})
 }
 
-func test_Number_GTE(t *testing.T, detail string, tests []testNumberValue) {
+func testNumberGTE(t *testing.T, detail string, tests []testNumberValue) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.GTE(tt.value).Error(); (err != nil) != tt.wantErr {
@@ -157,7 +157,7 @@ func test_Number_GTE(t *testing.T, detail string, tests []testNumberValue) {
 }
 
 func Test_Number_LT(t *testing.T) {
-	test_Number_LT(t, "Number", []testNumberValue{
+	testNumberLT(t, "Number", []testNumberValue{
 		{"1", Number(0), 0, false},             // test zero
 		{"2", Number(0), -10, false},           // not required
 		{"3", Number(0).Required(), -10, true}, // required
@@ -165,7 +165,7 @@ func Test_Number_LT(t *testing.T) {
 		{"5", Number(1), 2, false},
 		{"6", Number(10), 1, true},
 	})
-	test_Number_LT(t, "NumF32", []testNumberValue{
+	testNumberLT(t, "NumF32", []testNumberValue{
 		{"1", NumF32(0), 0, false},             // test zero
 		{"2", NumF32(0), -10, false},           // not required
 		{"3", NumF32(0).Required(), -10, true}, // required
@@ -173,7 +173,7 @@ func Test_Number_LT(t *testing.T) {
 		{"5", NumF32(1), 2, false},
 		{"6", NumF32(10), 1, true},
 	})
-	test_Number_LT(t, "NumF64", []testNumberValue{
+	testNumberLT(t, "NumF64", []testNumberValue{
 		{"1", NumF64(0), 0, false},             // test zero
 		{"2", NumF64(0), -10, false},           // not required
 		{"3", NumF64(0).Required(), -10, true}, // required
@@ -181,7 +181,7 @@ func Test_Number_LT(t *testing.T) {
 		{"5", NumF64(1), 2, false},
 		{"6", NumF64(10), 1, true},
 	})
-	test_Number_LT(t, "NumI32", []testNumberValue{
+	testNumberLT(t, "NumI32", []testNumberValue{
 		{"1", NumI32(0), 0, false},             // test zero
 		{"2", NumI32(0), -10, false},           // not required
 		{"3", NumI32(0).Required(), -10, true}, // required
@@ -189,7 +189,7 @@ func Test_Number_LT(t *testing.T) {
 		{"5", NumI32(1), 2, false},
 		{"6", NumI32(10), 1, true},
 	})
-	test_Number_LT(t, "NumI64", []testNumberValue{
+	testNumberLT(t, "NumI64", []testNumberValue{
 		{"1", NumI64(0), 0, false},             // test zero
 		{"2", NumI64(0), -10, false},           // not required
 		{"3", NumI64(0).Required(), -10, true}, // required
@@ -199,7 +199,7 @@ func Test_Number_LT(t *testing.T) {
 	})
 }
 
-func test_Number_LT(t *testing.T, detail string, tests []testNumberValue) {
+func testNumberLT(t *testing.T, detail string, tests []testNumberValue) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.LT(tt.value).Error(); (err != nil) != tt.wantErr {
@@ -210,7 +210,7 @@ func test_Number_LT(t *testing.T, detail string, tests []testNumberValue) {
 }
 
 func Test_Number_LTE(t *testing.T) {
-	test_Number_LTE(t, "Number", []testNumberValue{
+	testNumberLTE(t, "Number", []testNumberValue{
 		{"1", Number(0), 0, false},             // test zero
 		{"2", Number(0), -10, false},           // not required
 		{"3", Number(0).Required(), -10, true}, // required
@@ -218,7 +218,7 @@ func Test_Number_LTE(t *testing.T) {
 		{"5", Number(1), 2, false},
 		{"6", Number(10), 1, true},
 	})
-	test_Number_LTE(t, "NumF32", []testNumberValue{
+	testNumberLTE(t, "NumF32", []testNumberValue{
 		{"1", NumF32(0), 0, false},             // test zero
 		{"2", NumF32(0), -10, false},           // not required
 		{"3", NumF32(0).Required(), -10, true}, // required
@@ -226,7 +226,7 @@ func Test_Number_LTE(t *testing.T) {
 		{"5", NumF32(1), 2, false},
 		{"6", NumF32(10), 1, true},
 	})
-	test_Number_LTE(t, "NumF64", []testNumberValue{
+	testNumberLTE(t, "NumF64", []testNumberValue{
 		{"1", NumF64(0), 0, false},             // test zero
 		{"2", NumF64(0), -10, false},           // not required
 		{"3", NumF64(0).Required(), -10, true}, // required
@@ -234,7 +234,7 @@ func Test_Number_LTE(t *testing.T) {
 		{"5", NumF64(1), 2, false},
 		{"6", NumF64(10), 1, true},
 	})
-	test_Number_LTE(t, "NumI32", []testNumberValue{
+	testNumberLTE(t, "NumI32", []testNumberValue{
 		{"1", NumI32(0), 0, false},             // test zero
 		{"2", NumI32(0), -10, false},           // not required
 		{"3", NumI32(0).Required(), -10, true}, // required
@@ -242,7 +242,7 @@ func Test_Number_LTE(t *testing.T) {
 		{"5", NumI32(1), 2, false},
 		{"6", NumI32(10), 1, true},
 	})
-	test_Number_LTE(t, "NumI64", []testNumberValue{
+	testNumberLTE(t, "NumI64", []testNumberValue{
 		{"1", NumI64(0), 0, false},             // test zero
 		{"2", NumI64(0), -10, false},           // not required
 		{"3", NumI64(0).Required(), -10, true}, // required
@@ -252,7 +252,7 @@ func Test_Number_LTE(t *testing.T) {
 	})
 }
 
-func test_Number_LTE(t *testing.T, detail string, tests []testNumberValue) {
+func testNumberLTE(t *testing.T, detail string, tests []testNumberValue) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.LTE(tt.value).Error(); (err != nil) != tt.wantErr {
@@ -271,7 +271,7 @@ type testNumberMinMax struct {
 }
 
 func Test_Number_Range(t *testing.T) {
-	test_Number_Range(t, "Number", []testNumberMinMax{
+	testNumberRange(t, "Number", []testNumberMinMax{
 		{"1", Number(0), 0, 0, false},           // test zero
 		{"2", Number(0), 1, 2, false},           // not required
 		{"3", Number(0).Required(), 1, 2, true}, // required
@@ -281,7 +281,7 @@ func Test_Number_Range(t *testing.T) {
 		{"7", Number(4), 2, 4, false},
 		{"7", Number(5), 2, 4, true},
 	})
-	test_Number_Range(t, "NumF32", []testNumberMinMax{
+	testNumberRange(t, "NumF32", []testNumberMinMax{
 		{"1", NumF32(0), 0, 0, false},           // test zero
 		{"2", NumF32(0), 1, 2, false},           // not required
 		{"3", NumF32(0).Required(), 1, 2, true}, // required
@@ -291,7 +291,7 @@ func Test_Number_Range(t *testing.T) {
 		{"7", NumF32(4), 2, 4, false},
 		{"7", NumF32(5), 2, 4, true},
 	})
-	test_Number_Range(t, "NumF64", []testNumberMinMax{
+	testNumberRange(t, "NumF64", []testNumberMinMax{
 		{"1", NumF64(0), 0, 0, false},           // test zero
 		{"2", NumF64(0), 1, 2, false},           // not required
 		{"3", NumF64(0).Required(), 1, 2, true}, // required
@@ -301,7 +301,7 @@ func Test_Number_Range(t *testing.T) {
 		{"7", NumF64(4), 2, 4, false},
 		{"7", NumF64(5), 2, 4, true},
 	})
-	test_Number_Range(t, "NumI32", []testNumberMinMax{
+	testNumberRange(t, "NumI32", []testNumberMinMax{
 		{"1", NumI32(0), 0, 0, false},           // test zero
 		{"2", NumI32(0), 1, 2, false},           // not required
 		{"3", NumI32(0).Required(), 1, 2, true}, // required
@@ -311,7 +311,7 @@ func Test_Number_Range(t *testing.T) {
 		{"7", NumI32(4), 2, 4, false},
 		{"7", NumI32(5), 2, 4, true},
 	})
-	test_Number_Range(t, "NumI64", []testNumberMinMax{
+	testNumberRange(t, "NumI64", []testNumberMinMax{
 		{"1", NumI64(0), 0, 0, false},           // test zero
 		{"2", NumI64(0), 1, 2, false},           // not required
 		{"3", NumI64(0).Required(), 1, 2, true}, // required
@@ -323,7 +323,7 @@ func Test_Number_Range(t *testing.T) {
 	})
 }
 
-func test_Number_Range(t *testing.T, detail string, tests []testNumberMinMax) {
+func testNumberRange(t *testing.T, detail string, tests []testNumberMinMax) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.Range(tt.min, tt.max).Error(); (err != nil) != tt.wantErr {

@@ -16,17 +16,17 @@ type testString struct {
 }
 
 func Test_String_Required(t *testing.T) {
-	test_String_Required(t, "String", []testString{
+	testStringRequired(t, "String", []testString{
 		{"1", String(""), true},
 		{"2", String("x"), false},
 	})
-	test_String_Required(t, "StrPtr", []testString{
+	testStringRequired(t, "StrPtr", []testString{
 		{"1", StrPtr(nil), true},
 		{"2", StrPtr(ptrStr("x")), false},
 	})
 }
 
-func test_String_Required(t *testing.T, detail string, tests []testString) {
+func testStringRequired(t *testing.T, detail string, tests []testString) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.Required().Error(); (err != nil) != tt.wantErr {
@@ -44,7 +44,7 @@ type testStringLength struct {
 }
 
 func Test_String_GT(t *testing.T) {
-	test_String_GT(t, "String", []testStringLength{
+	testStringGT(t, "String", []testStringLength{
 		{"1", String("a"), 0, false},           // test zero length
 		{"2", String(""), 10, false},           // not required
 		{"3", String("").Required(), 10, true}, // required
@@ -52,7 +52,7 @@ func Test_String_GT(t *testing.T) {
 		{"5", String("ab"), 1, false},
 	})
 
-	test_String_GT(t, "StrPtr", []testStringLength{
+	testStringGT(t, "StrPtr", []testStringLength{
 		{"1", StrPtr(ptrStr("a")), 0, false},    // test zero length
 		{"2", StrPtr(nil), 10, false},           // not required
 		{"3", StrPtr(nil).Required(), 10, true}, // required
@@ -61,7 +61,7 @@ func Test_String_GT(t *testing.T) {
 	})
 }
 
-func test_String_GT(t *testing.T, detail string, tests []testStringLength) {
+func testStringGT(t *testing.T, detail string, tests []testStringLength) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.GT(tt.length).Error(); (err != nil) != tt.wantErr {
@@ -72,7 +72,7 @@ func test_String_GT(t *testing.T, detail string, tests []testStringLength) {
 }
 
 func Test_String_GTE(t *testing.T) {
-	test_String_GTE(t, "String", []testStringLength{
+	testStringGTE(t, "String", []testStringLength{
 		{"1", String("a"), 0, false},           // test zero length
 		{"2", String(""), 10, false},           // not required
 		{"3", String("").Required(), 10, true}, // required
@@ -81,7 +81,7 @@ func Test_String_GTE(t *testing.T) {
 		{"6", String("ab"), 10, true},
 	})
 
-	test_String_GTE(t, "StrPtr", []testStringLength{
+	testStringGTE(t, "StrPtr", []testStringLength{
 		{"1", StrPtr(ptrStr("a")), 0, false},    // test zero length
 		{"2", StrPtr(nil), 10, false},           // not required
 		{"3", StrPtr(nil).Required(), 10, true}, // required
@@ -91,7 +91,7 @@ func Test_String_GTE(t *testing.T) {
 	})
 }
 
-func test_String_GTE(t *testing.T, detail string, tests []testStringLength) {
+func testStringGTE(t *testing.T, detail string, tests []testStringLength) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.GTE(tt.length).Error(); (err != nil) != tt.wantErr {
@@ -102,7 +102,7 @@ func test_String_GTE(t *testing.T, detail string, tests []testStringLength) {
 }
 
 func Test_String_LT(t *testing.T) {
-	test_String_LT(t, "String", []testStringLength{
+	testStringLT(t, "String", []testStringLength{
 		{"1", String("a"), 0, true},           // test zero length
 		{"2", String(""), 0, false},           // not required
 		{"3", String("").Required(), 0, true}, // required
@@ -111,7 +111,7 @@ func Test_String_LT(t *testing.T) {
 		{"6", String("ab"), 1, true},
 	})
 
-	test_String_LT(t, "StrPtr", []testStringLength{
+	testStringLT(t, "StrPtr", []testStringLength{
 		{"1", StrPtr(ptrStr("a")), 0, true},    // test zero length
 		{"2", StrPtr(nil), 0, false},           // not required
 		{"3", StrPtr(nil).Required(), 0, true}, // required
@@ -121,7 +121,7 @@ func Test_String_LT(t *testing.T) {
 	})
 }
 
-func test_String_LT(t *testing.T, detail string, tests []testStringLength) {
+func testStringLT(t *testing.T, detail string, tests []testStringLength) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.LT(tt.length).Error(); (err != nil) != tt.wantErr {
@@ -132,7 +132,7 @@ func test_String_LT(t *testing.T, detail string, tests []testStringLength) {
 }
 
 func Test_String_LTE(t *testing.T) {
-	test_String_LTE(t, "String", []testStringLength{
+	testStringLTE(t, "String", []testStringLength{
 		{"1", String("a"), 0, true},           // test zero length
 		{"2", String(""), 0, false},           // not required
 		{"3", String("").Required(), 0, true}, // required
@@ -141,7 +141,7 @@ func Test_String_LTE(t *testing.T) {
 		{"6", String("ab"), 1, true},
 	})
 
-	test_String_LTE(t, "StrPtr", []testStringLength{
+	testStringLTE(t, "StrPtr", []testStringLength{
 		{"1", StrPtr(ptrStr("a")), 0, true},    // test zero length
 		{"2", StrPtr(nil), 0, false},           // not required
 		{"3", StrPtr(nil).Required(), 0, true}, // required
@@ -151,7 +151,7 @@ func Test_String_LTE(t *testing.T) {
 	})
 }
 
-func test_String_LTE(t *testing.T, detail string, tests []testStringLength) {
+func testStringLTE(t *testing.T, detail string, tests []testStringLength) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.LTE(tt.length).Error(); (err != nil) != tt.wantErr {
@@ -170,7 +170,7 @@ type testStringMinMax struct {
 }
 
 func Test_String_Length(t *testing.T) {
-	test_String_Length(t, "String", []testStringMinMax{
+	testStringLength(t, "String", []testStringMinMax{
 		{"1", String("a"), 0, 0, true},            // test zero
 		{"2", String(""), 5, 10, false},           // not required
 		{"3", String("").Required(), 5, 10, true}, // required
@@ -181,7 +181,7 @@ func Test_String_Length(t *testing.T) {
 		{"8", String("abc"), 4, 5, true},          // smaller
 	})
 
-	test_String_Length(t, "StrPtr", []testStringMinMax{
+	testStringLength(t, "StrPtr", []testStringMinMax{
 		{"1", StrPtr(ptrStr("a")), 0, 0, true},     // test zero
 		{"2", StrPtr(nil), 5, 10, false},           // not required
 		{"3", StrPtr(nil).Required(), 5, 10, true}, // required
@@ -193,7 +193,7 @@ func Test_String_Length(t *testing.T) {
 	})
 }
 
-func test_String_Length(t *testing.T, detail string, tests []testStringMinMax) {
+func testStringLength(t *testing.T, detail string, tests []testStringMinMax) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.Length(tt.min, tt.max).Error(); (err != nil) != tt.wantErr {
@@ -204,14 +204,14 @@ func test_String_Length(t *testing.T, detail string, tests []testStringMinMax) {
 }
 
 func Test_String_Len(t *testing.T) {
-	test_String_Len(t, "String", []testStringLength{
+	testStringLen(t, "String", []testStringLength{
 		{"1", String("a"), 0, true},           // test zero
 		{"2", String(""), 5, false},           // not required
 		{"3", String("").Required(), 5, true}, // required
 		{"4", String("ab"), 2, false},         // equal
 		{"5", String("ab"), 3, true},          // different
 	})
-	test_String_Len(t, "StrPtr", []testStringLength{
+	testStringLen(t, "StrPtr", []testStringLength{
 		{"1", StrPtr(ptrStr("a")), 0, true},    // test zero
 		{"2", StrPtr(nil), 5, false},           // not required
 		{"3", StrPtr(nil).Required(), 5, true}, // required
@@ -220,7 +220,7 @@ func Test_String_Len(t *testing.T) {
 	})
 }
 
-func test_String_Len(t *testing.T, detail string, tests []testStringLength) {
+func testStringLen(t *testing.T, detail string, tests []testStringLength) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.Len(tt.length).Error(); (err != nil) != tt.wantErr {
@@ -238,13 +238,13 @@ type testStringMatch struct {
 }
 
 func Test_String_Match(t *testing.T) {
-	test_String_Match(t, "String", []testStringMatch{
+	testStringMatch(t, "String", []testStringMatch{
 		{"1", String(""), "[a-z]", false},           // not required
 		{"2", String("").Required(), "[a-z]", true}, // required
 		{"3", String("ab"), "[a-z]", false},         // match
 		{"4", String("ab"), "[0-9]", true},          // not match
 	})
-	test_String_Match(t, "StrPtr", []testStringMatch{
+	testStringMatch(t, "StrPtr", []testStringMatch{
 		{"1", StrPtr(nil), "[a-z]", false},           // not required
 		{"2", StrPtr(nil).Required(), "[a-z]", true}, // required
 		{"3", StrPtr(ptrStr("ab")), "[a-z]", false},  // match
@@ -252,7 +252,7 @@ func Test_String_Match(t *testing.T) {
 	})
 }
 
-func test_String_Match(t *testing.T, detail string, tests []testStringMatch) {
+func testStringMatch(t *testing.T, detail string, tests []testStringMatch) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.Match(regexp.MustCompile(tt.pattern)).Error(); (err != nil) != tt.wantErr {
@@ -270,14 +270,14 @@ type testStringOneOf struct {
 }
 
 func Test_String_OneOf(t *testing.T) {
-	test_String_OneOf(t, "String", []testStringOneOf{
+	testStringOneOf(t, "String", []testStringOneOf{
 		{"1", String(""), []string{"ab"}, false},           // not required
 		{"2", String("").Required(), []string{"ab"}, true}, // required
 		{"3", String("ab"), []string{"ab"}, false},         // one
 		{"4", String("ab"), []string{"abc"}, true},         // not match
 		{"5", String("ab"), []string{"de", "fg"}, true},    // not match
 	})
-	test_String_OneOf(t, "StrPtr", []testStringOneOf{
+	testStringOneOf(t, "StrPtr", []testStringOneOf{
 		{"1", StrPtr(nil), []string{"ab"}, false},               // not required
 		{"2", StrPtr(nil).Required(), []string{"ab"}, true},     // required
 		{"3", StrPtr(ptrStr("ab")), []string{"ab"}, false},      // one
@@ -286,7 +286,7 @@ func Test_String_OneOf(t *testing.T) {
 	})
 }
 
-func test_String_OneOf(t *testing.T, detail string, tests []testStringOneOf) {
+func testStringOneOf(t *testing.T, detail string, tests []testStringOneOf) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.OneOf(tt.values).Error(); (err != nil) != tt.wantErr {
@@ -297,13 +297,13 @@ func test_String_OneOf(t *testing.T, detail string, tests []testStringOneOf) {
 }
 
 func Test_String_IsEmail(t *testing.T) {
-	test_String_IsEmail(t, "String", []testString{
+	testStringIsEmail(t, "String", []testString{
 		{"1", String(""), false},            // not required
 		{"2", String("").Required(), true},  // required
 		{"3", String("foo@bah.com"), false}, // match
 		{"4", String("not email"), true},    // not match
 	})
-	test_String_IsEmail(t, "StrPtr", []testString{
+	testStringIsEmail(t, "StrPtr", []testString{
 		{"1", StrPtr(nil), false},                   // not required
 		{"2", StrPtr(nil).Required(), true},         // required
 		{"3", StrPtr(ptrStr("foo@bah.com")), false}, // match
@@ -311,7 +311,7 @@ func Test_String_IsEmail(t *testing.T) {
 	})
 }
 
-func test_String_IsEmail(t *testing.T, detail string, tests []testString) {
+func testStringIsEmail(t *testing.T, detail string, tests []testString) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := tt.s.IsEmail().Error(); (err != nil) != tt.wantErr {
