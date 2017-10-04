@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rodcorsi/vld.svg?branch=master)](https://travis-ci.org/rodcorsi/vld)
 [![Coverage Status](https://coveralls.io/repos/github/rodcorsi/vld/badge.svg?branch=master)](https://coveralls.io/github/rodcorsi/vld?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/rodcorsi/vld)](https://goreportcard.com/report/github.com/rodcorsi/vld)
 
 Package written in Go for validation of string, numbers and structs without use of tags
 
