@@ -17,11 +17,11 @@ func Test_unitError_Args(t *testing.T) {
 
 	unitError = NewUnitError("", Args{})
 	if args := unitError.Args(); args == nil || len(args) != 0 {
-		t.Errorf("Args() = '%' want: {}", args)
+		t.Errorf("Args() = '%v' want: {}", args)
 	}
 
 	unitError = NewUnitError("", Args{"a", 1})
 	if args := unitError.Args(); len(args) != 2 || args[0] != "a" || args[1] != 1 {
-		t.Errorf("Args() = '%' want: {'a', 1}", args)
+		t.Errorf("Args() = '%v' want: {'a', 1}", args)
 	}
 }
