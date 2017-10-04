@@ -34,42 +34,21 @@ func TestValidate_Error(t *testing.T) {
 	}
 }
 
-func Test_errorSlice_Error(t *testing.T) {
+func Test_Errors_Error(t *testing.T) {
 	tests := []struct {
 		name string
-		e    errorSlice
+		e    Errors
 		want string
 	}{
-		{"1", errorSlice{}, ""},
-		{"2", errorSlice{errors.New("a")}, "a"},
-		{"3", errorSlice{errors.New("a"), errors.New("b")}, "a\nb"},
-		{"4", errorSlice{errors.New("a"), errors.New("b"), errors.New("c")}, "a\nb\nc"},
+		{"1", Errors{}, ""},
+		{"2", Errors{errors.New("a")}, "a"},
+		{"3", Errors{errors.New("a"), errors.New("b")}, "a\nb"},
+		{"4", Errors{errors.New("a"), errors.New("b"), errors.New("c")}, "a\nb\nc"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.e.Error(); got != tt.want {
-				t.Errorf("errorSlice.Error() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestValidate_ErrorFunc(t *testing.T) {
-	type args struct {
-		constructError ContructorErrorFunc
-	}
-	tests := []struct {
-		name    string
-		e       *Validate
-		args    args
-		wantErr bool
-	}{
-	// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := tt.e.ErrorFunc(tt.args.constructError); (err != nil) != tt.wantErr {
-				t.Errorf("Validate.ErrorFunc() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Errors.Error() = %v, want %v", got, tt.want)
 			}
 		})
 	}

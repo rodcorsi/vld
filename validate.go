@@ -4,9 +4,9 @@ import (
 	"bytes"
 )
 
-type errorSlice []error
+type Errors []error
 
-func (e errorSlice) Error() string {
+func (e Errors) Error() string {
 	var buffer bytes.Buffer
 	l := len(e)
 	if l == 0 {
@@ -52,7 +52,7 @@ func (e *Validate) ErrorFunc(constructError ContructorErrorFunc) error {
 	if e.errs == nil {
 		return nil
 	}
-	var errs errorSlice
+	var errs Errors
 	for _, e := range e.errs {
 		uniErr := NewUnitError(ErrValidation, Args{e.fieldName, constructError(e.err)})
 		errs = append(errs, constructError(uniErr))
