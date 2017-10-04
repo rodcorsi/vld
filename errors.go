@@ -76,9 +76,11 @@ var defaultErrMessage = map[string]string{
 
 type FormatMessageFunc func(errorID string, args Args) string
 
-var FormatMessage FormatMessageFunc = func(errorID string, args Args) string {
+func FormatMessageDefault(errorID string, args Args) string {
 	if format, ok := defaultErrMessage[errorID]; ok {
 		return fmt.Sprintf(format, args...)
 	}
 	return fmt.Sprint(errorID, args)
 }
+
+var FormatMessage = FormatMessageDefault
