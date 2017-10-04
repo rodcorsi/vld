@@ -9,9 +9,9 @@ var (
 )
 
 type stringVld struct {
-	err   UnitError
-	zero  bool
 	value string
+	zero  bool
+	err   UnitError
 }
 
 func String(value string) *stringVld {

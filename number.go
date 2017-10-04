@@ -1,9 +1,9 @@
 package vld
 
 type numberVld struct {
-	err   UnitError
 	value float64
 	zero  bool
+	err   UnitError
 }
 
 func Number(value int) *numberVld {

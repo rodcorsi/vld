@@ -1,9 +1,7 @@
 package vld
 
-import "fmt"
-
 const (
-	// ErrValidation when validation add some errors
+	// ErrValidation when validation adds some field error
 	// Used in String, StrPtr, Number
 	ErrValidation = "ErrValidation"
 
@@ -73,14 +71,3 @@ var defaultErrMessage = map[string]string{
 	ErrNumberLT:      "value is not smaller than %v",
 	ErrNumberLTE:     "value is not smaller or equal than %v",
 }
-
-type FormatMessageFunc func(errorID string, args Args) string
-
-func FormatMessageDefault(errorID string, args Args) string {
-	if format, ok := defaultErrMessage[errorID]; ok {
-		return fmt.Sprintf(format, args...)
-	}
-	return fmt.Sprint(errorID, args)
-}
-
-var FormatMessage = FormatMessageDefault

@@ -1,6 +1,8 @@
 package vld
 
-import "testing"
+import (
+	"testing"
+)
 
 func Test_unitError_ErrorID(t *testing.T) {
 	unitError := NewUnitError("id1", nil)
@@ -23,5 +25,27 @@ func Test_unitError_Args(t *testing.T) {
 	unitError = NewUnitError("", Args{"a", 1})
 	if args := unitError.Args(); len(args) != 2 || args[0] != "a" || args[1] != 1 {
 		t.Errorf("Args() = '%v' want: {'a', 1}", args)
+	}
+}
+
+func Test_unitError_Error(t *testing.T) {
+	tests := []struct {
+		name string
+		u    *unitError
+		want string
+	}{
+		{"1", &unitError{"", nil}, "[]"},
+		{"2", &unitError{"id", nil}, "id[]"},
+		{"3", &unitError{"id", Args{"a"}}, "id[a]"},
+		{"4", &unitError{"id", Args{"a", "b"}}, "id[a b]"},
+		{"5", &unitError{ErrRequired, nil}, defaultErrMessage[ErrRequired]},
+		{"6", &unitError{ErrValidation, Args{"f1", "foo"}}, "validation for 'f1' failed: foo"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.u.Error(); got != tt.want {
+				t.Errorf("unitError.Error() = '%v', want '%v'", got, tt.want)
+			}
+		})
 	}
 }

@@ -1,6 +1,7 @@
 package vld
 
 import (
+	"errors"
 	"testing"
 )
 
@@ -33,30 +34,43 @@ func TestValidate_Error(t *testing.T) {
 	}
 }
 
-func TestValidate_FieldError(t *testing.T) {
-	validate := New()
+func Test_errorSlice_Error(t *testing.T) {
+	tests := []struct {
+		name string
+		e    errorSlice
+		want string
+	}{
+		{"1", errorSlice{}, ""},
+		{"2", errorSlice{errors.New("a")}, "a"},
+		{"3", errorSlice{errors.New("a"), errors.New("b")}, "a\nb"},
+		{"4", errorSlice{errors.New("a"), errors.New("b"), errors.New("c")}, "a\nb\nc"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.e.Error(); got != tt.want {
+				t.Errorf("errorSlice.Error() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
 
-	validate.Ok("", nil)
-	fr := validate.FieldError()
-	if fr != nil {
-		t.Error("FieldError() expected nil")
+func TestValidate_ErrorFunc(t *testing.T) {
+	type args struct {
+		constructError ContructorErrorFunc
 	}
-
-	validate.Ok("field1", NewUnitError("errorID1", nil))
-	fr = validate.FieldError()
-	if len(fr) != 1 {
-		t.Errorf("FieldError() expected len == 1 result:%v", fr)
+	tests := []struct {
+		name    string
+		e       *Validate
+		args    args
+		wantErr bool
+	}{
+	// TODO: Add test cases.
 	}
-	if fr[0].Field() != "field1" || fr[0].UnitError().ErrorID() != "errorID1" {
-		t.Errorf("FieldError() expected {field1, errorID1} result:%+v", fr)
-	}
-
-	validate.Ok("field2", NewUnitError("errorID2", nil))
-	fr = validate.FieldError()
-	if len(fr) != 2 {
-		t.Errorf("FieldError() expected len == 2 result:%v", fr)
-	}
-	if fr[0].Field() != "field1" || fr[0].UnitError().ErrorID() != "errorID1" || fr[1].Field() != "field2" || fr[1].UnitError().ErrorID() != "errorID2" {
-		t.Errorf("FieldError() expected {{field1, errorID1},{field2, errorID2}} result:%+v", fr)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := tt.e.ErrorFunc(tt.args.constructError); (err != nil) != tt.wantErr {
+				t.Errorf("Validate.ErrorFunc() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
 	}
 }
